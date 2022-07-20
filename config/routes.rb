@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+
+  namespace :admin do
+  resources :genres, only: [:index, :edit, :update, :create]
+  resources :customers, only: [:index, :edit, :show, :update]
+  resources :posts, only: [:index, :edit, :show, :update]
+
+  end
+
+   scope module: :user do
+
+   end
+
  # 顧客用
 # URL /customers/sign_in ...
 devise_for :user,skip: [:passwords], controllers: {

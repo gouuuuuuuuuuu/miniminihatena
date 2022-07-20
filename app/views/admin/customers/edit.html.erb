@@ -1,0 +1,71 @@
+<h2><%= @customer.last_name + @customer.first_name %>さんの会員情報編集</h2>
+
+<%= form_with model: @customer, url:admin_customer_path(@customer.id), method: :PATCH do |f| %>
+<div class="container">
+<div class="row">
+
+<div class="col-4">
+会員ID
+</div>
+<div class="col-8 mb-3">
+<%= @customer.id %></br>
+</div>
+
+<div class="col-4">
+氏名
+</div>
+<div class="col-8 mb-3">
+<%= f.text_field :last_name %> <%= f.text_field :first_name %></br>
+</div>
+
+<div class="col-4">
+フリガナ
+</div>
+<div class="col-8 mb-3">
+<%= f.text_field :last_name_kana %> <%= f.text_field :first_name_kana %></br>
+</div>
+
+<div class="col-4">
+郵便番号
+</div>
+<div class="col-8 mb-3">
+<%= f.text_field :postal_code %></br>
+</div>
+
+<div class="col-4">
+住所
+</div>
+<div class="col-8 mb-2">
+<%= f.text_field :address,class: "form-control" %></br>
+</div>
+
+<div class="col-4">
+電話番号
+</div>
+<div class="col-8 mb-3">
+<%= f.text_field :telephone_number %></br>
+</div>
+
+<div class="col-4">
+メールアドレス
+</div>
+<div class="col-8 mb-3">
+<%= f.text_field :email %></br>
+</div>
+
+<div class="col-4">
+会員ステータス
+</div>
+<div class="col-8 mb-3">
+ <%= f.radio_button :is_deleted, false %>
+<%= f.label :is_deleted_trye,"有効" %>
+<%= f.radio_button :is_deleted, true %>
+<%= f.label :is_deleted_false,"退会" %></br>
+</div>
+
+<div class="col-9">
+<%= f.submit '変更を保存', class: "btn btn-success" %>
+<% end %>
+</div>
+</div>
+</div>
