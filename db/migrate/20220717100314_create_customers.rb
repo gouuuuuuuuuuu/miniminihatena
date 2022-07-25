@@ -1,7 +1,6 @@
 class CreateCustomers < ActiveRecord::Migration[6.1]
   def change
     create_table :customers do |t|
-
       t.timestamps
       t.string :last_name
        t.string :first_name
@@ -13,7 +12,6 @@ class CreateCustomers < ActiveRecord::Migration[6.1]
              t.string :postal_code
               t.string :address
                t.string :telephone_number
-
     end
   end
 end

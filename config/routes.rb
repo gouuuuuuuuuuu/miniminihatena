@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
   resources :genres, only: [:index, :edit, :update, :create]
-  resources :customers, only: [:index, :edit, :show, :update]
+  resources :users, only: [:index, :edit, :show, :update]
   resources :posts, only: [:index, :edit, :show, :update]
 
   end
