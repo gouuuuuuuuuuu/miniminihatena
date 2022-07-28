@@ -53,18 +53,24 @@ ActiveRecord::Schema.define(version: 2022_07_21_091309) do
   end
 
   create_table "customers", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "name"
     t.string "last_name"
     t.string "first_name"
     t.string "last_name_kana"
     t.string "first_name_kana"
-    t.string "email"
-    t.boolean "is_deleted"
-    t.string "encrypted_password"
     t.string "postal_code"
     t.string "address"
     t.string "telephone_number"
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_customers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
 
   create_table "genres", force: :cascade do |t|
@@ -80,26 +86,6 @@ ActiveRecord::Schema.define(version: 2022_07_21_091309) do
     t.string "first_name"
     t.string "last_name_kana"
     t.string "first_name_kana"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.string "name"
-    t.string "last_name"
-    t.string "first_name"
-    t.string "last_name_kana"
-    t.string "first_name_kana"
-    t.string "postal_code"
-    t.string "address"
-    t.string "telephone_number"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
