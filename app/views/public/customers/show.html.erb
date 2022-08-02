@@ -13,11 +13,13 @@
 	<thead>
 		<tr>
 			<th>氏名</th>
-			<th><%= @customer.last_name + @customer.first_name %></th>
+			<th><%= @customer.last_name %></th>
+			<th><%= @customer.first_name %></th>
 		</tr>
 		<tr>
 			<th>カナ</th>
-			<th><%= @customer.last_name_kana + @customer.first_name_kana %></th>
+			<th><%= @customer.last_name_kana %></th>
+				<th><%= @customer.first_name_kana %></th>
 		</tr>
 		<tr>
 			<th>郵便番号</th>
@@ -37,5 +39,19 @@
 		</tr>
 	</thead>
 </table>
+
+<div class="col-md-4">
+いいね一覧</br>
+</div>
+<div class="col-md-8 mb-4">
+<%= link_to '一覧を見る',public_customers_good_path, class: "btn btn-primary" %>
+</div>
+
+<div class="col-md-4">
+投稿一覧</br>
+</div>
+<div class="col-md-8">
+<%= link_to '一覧を見る',public_customer_path, class: "btn btn-primary" %>
+</div>
 </div>
 </div>

@@ -22,33 +22,39 @@
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
 
+            <% if customer_signed_in? %>
+
             <li class="nav-item">
               <%= link_to "ユーザーログアウト", destroy_customer_session_path, method: :delete, class: 'nav-link text-dark' %>
             </li>
             <li class="nav-item">
-　            <%= link_to "adminーログイン",   new_admin_session_path, class: 'nav-link text-dark' %>
+              <%= link_to "マイページ", public_customer_path( current_customer), class: 'nav-link text-dark' %>
+            </li>
+
+            <% elsif admin_signed_in? %>
+            <li class="nav-item">
+　            <%= link_to "adminーログイン", new_admin_session_path, class: 'nav-link text-dark' %>
             </li>
             <li class="nav-item">
-
+                <%= link_to "アドミンログアウト", destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
             </li>
             <li class="nav-item">
-
+               <%= link_to "ジャンル一覧", admin_genres_path, class: 'nav-link text-dark' %>
             </li>
 
 
              <li class="nav-item">
-
             <li class="nav-item">
 
             </li>
             <li class="nav-item">
 
             </li>
+
+              <% else %>
+
             <li class="nav-item">
-              <%= link_to "ジャンル一覧",  admin_genres_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
+
             </li>
 
             <li class="nav-item">
@@ -63,6 +69,7 @@
             <li class="nav-item">
               <%= link_to "ユーザーログイン",   new_customer_session_path, class: 'nav-link text-dark' %>
             </li>
+            <% end %>
 
             </ul>
           </div>

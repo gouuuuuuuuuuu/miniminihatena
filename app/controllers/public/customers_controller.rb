@@ -13,6 +13,17 @@ class Public::CustomersController < ApplicationController
     redirect_to public_customer_path
   end
 
+  def confirmtion
+  end
+
+  def withdrawal
+    @customer = current_customer
+    @customer.update(is_deleted: true)
+    reset_session
+    redirect_to root_path
+  end
+
+
 
 
   private

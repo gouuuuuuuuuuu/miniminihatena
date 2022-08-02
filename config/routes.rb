@@ -20,6 +20,9 @@ devise_for :customers,skip: [:passwords], controllers: {
 
 # scope module: :public do
   namespace :public do
+   get "customers/confirmtion" => "customers#confirmtion"
+   get "customers/good" => "customers#good"
+   patch "customers/withdrawal" => "customeers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
   end
 
