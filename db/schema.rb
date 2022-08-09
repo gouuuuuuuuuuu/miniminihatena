@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 2022_07_21_091309) do
     t.string "first_name"
     t.string "last_name_kana"
     t.string "first_name_kana"
+    t.string "title"
+    t.text "body"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

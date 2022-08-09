@@ -22,8 +22,9 @@ devise_for :customers,skip: [:passwords], controllers: {
   namespace :public do
    get "customers/confirmtion" => "customers#confirmtion"
    get "customers/good" => "customers#good"
-   patch "customers/withdrawal" => "customeers#withdrawal"
+   patch "customers/withdrawal" => "customers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
+   resources :posts, only: [:new, :index, :edit, :show, :update, :create, :destroy]
   end
 
 

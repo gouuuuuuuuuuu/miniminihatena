@@ -19,7 +19,9 @@ class Public::CustomersController < ApplicationController
   def withdrawal
     @customer = current_customer
     @customer.update(is_deleted: true)
+    
     reset_session
+    sign_out current_customer
     redirect_to root_path
   end
 
