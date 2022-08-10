@@ -3,12 +3,9 @@ class CreatePosts < ActiveRecord::Migration[6.1]
     create_table :posts do |t|
 
       t.timestamps
-       t.string :last_name
-        t.string :first_name
-         t.string :last_name_kana
-          t.string :first_name_kana
-           t.string :title
-            t.text :body
+       t.integer :customer_id
+        t.string :title
+         t.text :body
     end
   end
 end

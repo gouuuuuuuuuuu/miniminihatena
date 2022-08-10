@@ -4,8 +4,7 @@ class Admin::PostsController < ApplicationController
  end
 
  def index
-    @posts = Post.all
-    @user = current_customer
+    @posts = Post.where(customer_id: params[:customer_id])
     @post = Post.new
  end
 
