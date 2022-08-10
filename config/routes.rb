@@ -5,9 +5,9 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   sessions: "admin/sessions"
 }
   namespace :admin do
-  resources :genres, only: [:index, :edit, :update, :create]
-  resources :customers, only: [:index, :edit, :show, :update]
-  resources :posts, only: [:index, :edit, :show, :update]
+  resources :genres, only: [:index, :edit, :update, :create, :destroy]
+  resources :customers, only: [:index, :edit, :show, :update, :destroy]
+  resources :posts, only: [:index, :edit, :show, :update, :destroy]
 
   end
 
@@ -24,7 +24,7 @@ devise_for :customers,skip: [:passwords], controllers: {
    get "customers/good" => "customers#good"
    patch "customers/withdrawal" => "customers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
-   resources :posts, only: [:new, :index, :edit, :show, :update, :create, :destroy]
+   resources :posts
   end
 
 

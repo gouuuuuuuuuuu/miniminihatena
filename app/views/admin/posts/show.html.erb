@@ -1,2 +1,20 @@
-<h2>詳細ページ</h2>
+<h2>投稿詳細</h2>
+
+
+<div class="container">
+<div class="row">
+<div class="col-5">
+</div>
+<div class="col-4">
+
+<%= form_with model: @post, url: edit_public_post_path do |f| %>
+
+<%= f.text_field :title %>
+
+<%= f.text_area :body %> <br>
+<% end %>
+<%= link_to '編集する',edit_public_post_path, class: "btn btn-success" %>
+</div>
+</div>
+</div>
 

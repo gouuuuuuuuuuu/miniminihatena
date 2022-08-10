@@ -17,6 +17,10 @@ class Admin::CustomersController < ApplicationController
     redirect_to admin_customer_path(@customers.id)
   end
 
+  def destroy
+
+  end
+
   private
 
   def customer_params

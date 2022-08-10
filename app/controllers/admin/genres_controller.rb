@@ -20,6 +20,10 @@ class Admin::GenresController < ApplicationController
   redirect_to admin_genres_path(@genres)
  end
 
+ def destroy
+
+ end
+
  private
 
  def genre_params
