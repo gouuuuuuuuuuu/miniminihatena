@@ -4,8 +4,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all
-    @user = current_customer
+    @posts = Post.where(customer_id: current_customer.id)
     @post = Post.new
   end
 
@@ -25,6 +24,7 @@ class Public::PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.customer_id = current_customer.id
     @post.save
     redirect_to public_posts_path
   end

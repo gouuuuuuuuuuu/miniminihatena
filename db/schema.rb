@@ -82,10 +82,7 @@ ActiveRecord::Schema.define(version: 2022_07_21_091309) do
   create_table "posts", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "last_name"
-    t.string "first_name"
-    t.string "last_name_kana"
-    t.string "first_name_kana"
+    t.integer "customer_id"
     t.string "title"
     t.text "body"
   end
