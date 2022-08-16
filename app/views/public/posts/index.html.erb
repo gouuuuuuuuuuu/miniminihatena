@@ -10,18 +10,18 @@
     </tr>
   </thead>
   <tbody>
-    <% @posts.each do |posts| %>
+    <% @posts.each do |postss| %>
     <tr>
       <td>
 
       </td>
       <td>
-
-        <%= posts.title %>
-
+        <%= postss.title %>
       </td>
       <td>
-        <%= posts.body %>
+         <%= link_to admin_post_path(postss.id) do %>
+        <%= postss.body %>
+         <% end %>
       </td>
     </tr>
     <% end %>

@@ -7,14 +7,14 @@
 </div>
 <div class="col-4">
 
-<%= form_with model: @post, url: edit_public_post_path do |f| %>
+<% if customer_signed_in? && current_customer.id == @post.customer_id %>
+タイトル <%= @post.title %></br>
 
-<%= f.text_field :title %>
+説明 <%= @post.body %> <br>
+ <% end %>
 
-<%= f.text_area :body %> <br>
-<% end %>
-<%= link_to '編集する',edit_public_post_path, class: "btn btn-success" %>
+<%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
+ <%= link_to "削除する", admin_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
 </div>
 </div>
 </div>
-

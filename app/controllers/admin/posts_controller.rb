@@ -1,11 +1,7 @@
 class Admin::PostsController < ApplicationController
- def new
-    @post = Post.new
- end
-
  def index
     @posts = Post.where(customer_id: params[:customer_id])
-    @post = Post.new
+    #@post = Post.new
  end
 
  def show
@@ -23,9 +19,10 @@ class Admin::PostsController < ApplicationController
  end
 
  def destroy
-
+  @post= Post.find(params[:id])
+  @post.destroy
+  redirect_to admin_posts_path
  end
-
 
  private
  def post_params

@@ -3,6 +3,12 @@
 class Public::SessionsController < Devise::SessionsController
   before_action :customer_state, only: [:create]
 
+  def guest_sign_in
+    customer = Customer.guest
+    sign_in customer
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
+
   # GET /resource/sign_in
   # def new
   #   super
@@ -36,7 +42,6 @@ class Public::SessionsController < Devise::SessionsController
 def customer_state
 
   @customer = Customer.find_by(email: params[:customer][:email])
-#byebug
   return if !@customer
 
   if @customer.valid_password?(params[:customer][:password]) && @customer.is_deleted
