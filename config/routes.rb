@@ -25,10 +25,11 @@ devise_for :customers,skip: [:passwords], controllers: {
    patch "customers/withdrawal" => "customers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
    resources :posts
+   resources :comments, only: [:create]
   end
 
 
-
+#topページ
 root to:  'public/homes#top'
 get '/about' => 'public/homes#about',as:'about'
 
@@ -37,6 +38,10 @@ get '/about' => 'public/homes#about',as:'about'
     post 'public/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
 
+#ゲストログイン
+ #devise_for :customer, controllers: {
+    #registrations: 'customer/registrations'
+  #}
 
  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

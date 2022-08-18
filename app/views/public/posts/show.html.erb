@@ -11,8 +11,24 @@
 
 説明 <%= @post.body %> <br>
 
+コメントをする
+
+<% form_with(model:[@post, @comment], url: public_comments_path, method: :post) do |f| %>
+  <% f.text_area :comment_content %>
+  <% f.hidden_field :post_id, value: @post.id %>
+  <% f.submit 'コメントする' %>
+  <% end %>
+
+ コメント一覧
+
+<% @comments.each do |comment| %>
+  <% comment.comment_content %>
+<% end %>
+
+<% if customer_signed_in? && current_customer.id == @post.customer_id %>
 <%= link_to '編集する',edit_public_post_path, class: "btn btn-success" %>
  <%= link_to "削除する", public_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
+ <% end %>
 </div>
 </div>
 </div>
