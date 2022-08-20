@@ -15,6 +15,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 # URL /customers/sign_in ...
 devise_for :customers,skip: [:passwords], controllers: {
    registrations: "public/registrations",
+   #registrations: 'customer/registrations',
   sessions: 'public/sessions'
   }
 
@@ -36,12 +37,12 @@ get '/about' => 'public/homes#about',as:'about'
 
  devise_scope :customer do
     post 'public/guest_sign_in', to: 'public/sessions#guest_sign_in'
-  end
+ end
 
 #ゲストログイン
- #devise_for :customer, controllers: {
-    #registrations: 'customer/registrations'
-  #}
+# devise_for :customer, controllers: {
+#    registrations: 'customer/registrations'
+#  }
 
  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

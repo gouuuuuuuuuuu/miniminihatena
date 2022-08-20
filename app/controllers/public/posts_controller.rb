@@ -1,5 +1,8 @@
 class Public::PostsController < ApplicationController
   def new
+    if current_customer.email == 'guest@1111.com'
+      redirect_to root_path, alert: 'ゲストユーザーは投稿できません。'
+    end
     @post = Post.new
   end
 
@@ -10,7 +13,8 @@ class Public::PostsController < ApplicationController
 
   def show
     @post=Post.find(params[:id])
-    @comments = current_customer.comments.new
+    @comments = @post.comments
+    @comment = current_customer.comments.new
   end
 
   def edit

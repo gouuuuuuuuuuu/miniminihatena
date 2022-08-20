@@ -1,5 +1,8 @@
 class Public::CustomersController < ApplicationController
   def show
+    if current_customer.email == 'guest@1111.com'
+      redirect_to root_path, alert: 'ゲストユーザーはマイページを更新できません。'
+    end
     @customer = current_customer
   end
 
@@ -10,7 +13,7 @@ class Public::CustomersController < ApplicationController
   def update
     @customer = current_customer
     @customer.update(customer_params)
-    redirect_to public_customers_show_path
+    redirect_to public_customer_path
   end
 
   def confirmation
@@ -18,11 +21,15 @@ class Public::CustomersController < ApplicationController
 
   def withdrawal
     @customer = current_customer
-    @customer.update(is_deleted: true)
-    
-    reset_session
-    sign_out current_customer
-    redirect_to root_path
+
+    if @customer.email == 'guest@1111.com'
+      redirect_to root_path, alert: 'ゲストユーザーは削除できません。'
+    else
+      @customer.update(is_deleted: true)
+      reset_session
+      sign_out current_customer
+      redirect_to root_path
+    end
   end
 
   private
