@@ -25,6 +25,8 @@
          <%= link_to public_post_path(postss.id) do %>
         <%= postss.body %>
          <% end %>
+         (<%= postss.liked_customers.count %>)
+         <div class="far fa-heart"></div>
       </td>
     </tr>
     <% end %>

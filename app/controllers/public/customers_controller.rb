@@ -19,6 +19,10 @@ class Public::CustomersController < ApplicationController
   def confirmation
   end
 
+  def good
+    @customer = current_customer
+  end
+
   def withdrawal
     @customer = current_customer
 

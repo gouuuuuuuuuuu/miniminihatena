@@ -25,6 +25,22 @@
   <%= comment.comment_content %>
 <% end %>
 
+<h3>いいね件数: <%= @post.likes.count %></h3>
+<% if customer_signed_in? && current_customer.already_liked?(@post) %>
+  <%= link_to public_post_like_path(@post), method: :delete do %>
+   <i class="far fa-heart"></i>
+   <% end %>
+<% else %>
+  <%= link_to public_post_likes_path(@post),method: :post do %>
+   <i class="far fa-heart"></i>
+   <% end %>
+<% end %>
+<h2>いいねしたユーザー</h2>
+<% @post.liked_customers.each do |customer| %>
+  <li><%= customer.email %></li>
+<% end %>
+
+
 <% if customer_signed_in? && current_customer.id == @post.customer_id %>
 <%= link_to '編集する',edit_public_post_path, class: "btn btn-success" %>
  <%= link_to "削除する", public_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>

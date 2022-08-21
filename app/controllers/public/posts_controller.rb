@@ -12,9 +12,14 @@ class Public::PostsController < ApplicationController
   end
 
   def show
-    @post=Post.find(params[:id])
+    @post = Post.find(params[:id])
+    @like = Like.new
     @comments = @post.comments
-    @comment = current_customer.comments.new
+    if customer_signed_in?
+      @comment = current_customer.comments.new
+    else
+      @comment = Comment.new
+    end
   end
 
   def edit

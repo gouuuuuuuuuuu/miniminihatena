@@ -25,7 +25,9 @@ devise_for :customers,skip: [:passwords], controllers: {
    get "customers/good" => "customers#good"
    patch "customers/withdrawal" => "customers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
-   resources :posts
+   resources :posts do
+    resources :likes, only: [:create, :destroy]
+   end
    resources :comments, only: [:create]
   end
 
@@ -34,7 +36,7 @@ devise_for :customers,skip: [:passwords], controllers: {
 root to:  'public/homes#top'
 get '/about' => 'public/homes#about',as:'about'
 
-
+#ゲストログイン
  devise_scope :customer do
     post 'public/guest_sign_in', to: 'public/sessions#guest_sign_in'
  end
