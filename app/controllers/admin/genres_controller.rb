@@ -1,4 +1,5 @@
 class Admin::GenresController < ApplicationController
+ # before_action :redirect_root, except:
 
  def index
   @genres = Genre.all

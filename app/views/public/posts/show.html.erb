@@ -25,7 +25,7 @@
   <%= comment.comment_content %>
 <% end %>
 
-<h3>いいね件数: <%= @post.likes.count %></h3>
+<h3> <%= @post.likes.count %> いいね</h3>
 <% if customer_signed_in? && current_customer.already_liked?(@post) %>
   <%= link_to public_post_like_path(@post), method: :delete do %>
    <i class="far fa-heart"></i>

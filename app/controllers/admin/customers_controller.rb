@@ -1,4 +1,6 @@
 class Admin::CustomersController < ApplicationController
+# before_action :redirect_root, except:
+
   def index
      @customers=Customer.page(params[:page]).per(3)
   end

@@ -3,35 +3,23 @@
 <% if flash[:alert] %>
 <%= flash[:alert] %>
 <% end %>
+<div class="container">
+<div class="row">
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>タイトル</th>
-      <th>説明</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @posts.each do |postss| %>
-    <tr>
-      <td>
 
-      </td>
-      <td>
-        <%= postss.title %>
-      </td>
-      <td>
-         <%= link_to public_post_path(postss.id) do %>
-        <%= postss.body %>
-         <% end %>
-         (<%= postss.liked_customers.count %>)
-         <div class="far fa-heart"></div>
-      </td>
-    </tr>
-    <% end %>
-    </tbody>
-</table>
+<% @posts.each do |postss| %>
+<div class="col-lg-3">
+   <div class="box1">
+<%= postss.title %>
+<%= link_to public_post_path(postss.id) do %>
+<%= postss.body %>
+ <% end %>
+<div class="far fa-heart"></div>
+<%= postss.liked_customers.count %>
+</div>
+ </div>
+ <% end %>
 </div>
 </div>
-</div>
+
+
