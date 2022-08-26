@@ -1,16 +1,10 @@
-<h2>ジャンル一覧・追加</h2>
-
-
+<div class="mx-auto">
+<h2>ジャンル一覧 (全<%= @genres.size%>件)・追加</h2>
 
  <%= form_with model: Genre.new, url: admin_genres_path, method: :POST do |f| %>
- <p>ジャンル名
- <%= f.text_field :name %>
-
+ <%= f.text_field :name,placeholder: 'ジャンル名' %>
  <%= f.submit '新規登録', class: "btn btn-success" %>
  <% end %>
- </p>
-
-
 
   <table class="table-striped">
   	<thead>
@@ -32,3 +26,4 @@
   	</tbody>
   	<% end %>
   </table>
+  </div>

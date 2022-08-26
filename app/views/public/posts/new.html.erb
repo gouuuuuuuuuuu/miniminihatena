@@ -1,12 +1,12 @@
 <div class="mx-auto">
 <%= form_with model: @post, url: public_posts_path, local: true do |form| %>
 
-<p><%= form.label :title %><br>
-<%= form.text_field :title %>
+<p><%= form.label :タイトル %><br>
+<%= form.text_field :title,placeholder: 'title' %>
 </p>
 
-<p><%= form.label :body %><br>
-<%= form.text_area :body %>
+<p><%= form.label :説明文 %><br>
+<%= form.text_area :body,placeholder: 'body' %>
 </p>
 
 <p><%= form.submit '投稿する', class: "btn btn-success" %>

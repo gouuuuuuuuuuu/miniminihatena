@@ -1,10 +1,8 @@
-<h2>過去の投稿</h2>
-
+<h3>過去の投稿 (全<%= @posts.size%>件)</h3>
 
 <table class="table table-striped">
   <thead>
     <tr>
-
       <th>タイトル</th>
       <th>説明</th>
     </tr>
@@ -19,6 +17,7 @@
          <%= link_to admin_post_path(postss.id) do %>
         <%= postss.body %>
          <% end %>
+         <%= postss.liked_customers.count %> いいね
       </td>
     </tr>
     <% end %>

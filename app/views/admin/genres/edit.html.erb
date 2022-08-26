@@ -1,8 +1,8 @@
+<div class="mx-auto">
 <h2>ジャンル編集</h2>
 
 <%= form_with model: @genre, url:admin_genre_path(@genre.id), method: :PATCH do |f| %>
-<p>ジャンル名
-<%= f.text_field :name %>
+<%= f.text_field :name,placeholder: 'ジャンル名' %>
 <%= f.submit '変更を保存', class: "btn btn-success" %>
 <% end %>
-</p>
+</div>
