@@ -11,8 +11,9 @@
 <div class="col-lg-3">
  <%= link_to public_post_path(postss.id) do %>
    <div class="box1">
+<%= postss.customer.nickname %>
 <%= postss.title %>
-<%= postss.body %>
+<%= image_tag postss.get_post_image,width:"100%" %>
 <% if customer_signed_in? && current_customer.already_liked?(postss) %>
   <%= link_to public_post_like_path(postss.id, current_customer.likes.find_by(post_id: postss.id).id), method: :delete, class: "like-btn" do %>
 
