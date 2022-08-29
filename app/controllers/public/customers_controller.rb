@@ -1,6 +1,7 @@
 class Public::CustomersController < ApplicationController
+  before_action :authenticate_customer!
   def show
-    if current_customer.email == 'guest@1111.com'
+    if current_customer && current_customer.email == 'guest@1111.com'
       redirect_to root_path, alert: 'ゲストユーザーはマイページを更新できません。'
     end
     @customer = current_customer
@@ -26,7 +27,7 @@ class Public::CustomersController < ApplicationController
   def withdrawal
     @customer = current_customer
 
-    if @customer.email == 'guest@1111.com'
+    if current_customer && current_customer.email == 'guest@1111.com'
       redirect_to root_path, alert: 'ゲストユーザーは削除できません。'
     else
       @customer.update(is_deleted: true)
@@ -41,4 +42,5 @@ class Public::CustomersController < ApplicationController
   def customer_params
     params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :encrypted_password, :postal_code, :address, :telephone_number, :is_deleted)
   end
+
 end

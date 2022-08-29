@@ -1,9 +1,8 @@
 class Admin::GenresController < ApplicationController
- # before_action :redirect_root, except:
-
- def index
+  before_action :authenticate_customer
+def index
   @genres = Genre.all
- end
+end
 
  def edit
   @genre=Genre.find(params[:id])

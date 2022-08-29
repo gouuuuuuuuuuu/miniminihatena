@@ -1,4 +1,5 @@
 class Public::PostsController < ApplicationController
+  before_action :authenticate_customer!
   def new
     if current_customer.email == 'guest@1111.com'
       redirect_to root_path, alert: 'ゲストユーザーは投稿できません。'
