@@ -8,7 +8,7 @@
 会員ID
 </div>
 <div class="col-8 mb-3">
-<%= @customer.id %></br>
+No.<%= @customer.id %></br>
 </div>
 
 <div class="col-4">
@@ -51,6 +51,13 @@
 </div>
 <div class="col-8 mb-3">
 <%= f.text_field :email %></br>
+</div>
+
+<div class="col-4">
+ニックネーム
+</div>
+<div class="col-8 mb-3">
+<%= f.text_field :nickname %></br>
 </div>
 
 <div class="col-4">
