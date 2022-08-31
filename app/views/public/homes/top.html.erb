@@ -12,19 +12,21 @@
  <%= link_to public_post_path(postss.id) do %>
    <div class="box1 px-3">
 <%= postss.customer.nickname %>
-<%= postss.title %>
-<%= image_tag postss.get_post_image, class:"post-index-img" %>
-<% if customer_signed_in? && current_customer.already_liked?(postss) %>
-  <%= link_to public_post_like_path(postss.id, current_customer.likes.find_by(post_id: postss.id).id), method: :delete, class: "like-btn" do %>
-
+<span>
+     <% if customer_signed_in? && current_customer.already_liked?(postss) %>
+  <%= link_to public_post_like_path(postss.id, current_customer.likes.find_by(post_id: postss.id).id), method: :delete, class: "unlike-btn" do %>
   <i class="fas fa-heart"></i>
    <% end %>
 <% else %>
-  <%= link_to public_post_likes_path(postss.id),method: :post, class: "unlike-btn" do %>
+  <%= link_to public_post_likes_path(postss.id),method: :post, class: "like-btn" do %>
    <i class="far fa-heart"></i>
    <% end %>
 <% end %>
 <%= postss.liked_customers.count %>
+</span>
+<div><%= postss.title %></div>
+<%= image_tag postss.get_post_image, class:"post-index-img" %>
+
 </div>
  <% end %>
  </div>
