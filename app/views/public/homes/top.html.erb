@@ -9,6 +9,10 @@
 
 <% @posts.each do |postss| %>
 <div class="col-lg-3 card-post">
+ <table>
+  <thead>
+   <tr>
+    <th>
  <%= postss.customer.nickname %>
  <span class="like">
      <% if customer_signed_in? && current_customer.already_liked?(postss) %>
@@ -22,6 +26,10 @@
 <% end %>
 <%= postss.liked_customers.count %>
 </span>
+ </th>
+ </tr>
+ </thead>
+ </table>
  <%= link_to public_post_path(postss.id) do %>
    <div class="box1 px-3">
 <div><%= postss.title %></div>

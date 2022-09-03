@@ -10,6 +10,8 @@
 タイトル <%= @post.title %></br>
 説明 <%= @post.body %> <br>
 
+コメント <%=  %>
+
 <%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
  <%= link_to "削除する", admin_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
 </div>
