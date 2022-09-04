@@ -11,10 +11,12 @@
     <% @posts.each do |postss| %>
     <tr>
       <td>
-        <%= postss.title %>
+         <%= link_to admin_post_path(postss.id) do %>
+          <%= postss.title %>
+          <% end %>
       </td>
       <td>
-         <%= link_to admin_post_path(postss.id) do %>
+        <%= link_to admin_post_path(postss.id) do %>
         <%= postss.body %>
          <% end %>
          <%= postss.liked_customers.count %> いいね

@@ -8,6 +8,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   resources :genres, only: [:index, :edit, :update, :create, :destroy]
   resources :customers, only: [:index, :edit, :show, :update, :destroy]
   resources :posts, only: [:index, :edit, :show, :update, :destroy]
+  resources :comments, only: [:destroy]
 
   end
 

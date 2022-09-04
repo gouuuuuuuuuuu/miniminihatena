@@ -8,12 +8,14 @@
 
 
 <% @posts.each do |postss| %>
-<div class="col-lg-3 card-post">
+<div class="col-lg-4 card-post">
  <table>
   <thead>
    <tr>
     <th>
  <%= postss.customer.nickname %>
+ </th>
+ <th>
  <span class="like">
      <% if customer_signed_in? && current_customer.already_liked?(postss) %>
   <%= link_to public_post_like_path(postss.id, current_customer.likes.find_by(post_id: postss.id).id), method: :delete, class: "unlike-btn" do %>
@@ -27,19 +29,40 @@
 <%= postss.liked_customers.count %>
 </span>
  </th>
- </tr>
- </thead>
- </table>
+  </tr>
+   </thead>
+    </table>
  <%= link_to public_post_path(postss.id) do %>
-   <div class="box1 px-3">
+   <div class="box1 px-3 left">
 <div><%= postss.title %></div>
 <%= image_tag postss.get_post_image, class:"post-index-img" %>
-
 </div>
  <% end %>
  </div>
  <% end %>
 </div>
-</div>
+ </div>
 
-
+<div class="weather_info">
+   <h3>天気予報</h3>
+    <label>都市名：</label>
+    <input id="cityname" type="text" size="14" maxlength="14" placeholder="Tokyo">
+    <button id="btn">検索</button><br>
+    <span>場所 :</span>
+    <span id="place"></span><br>
+    <span>最高気温 :</span>
+    <span id="temp_max"></span>
+    <span> ℃</span><br>
+    <span>最低気温 :</span>
+    <span id="temp_min"></span>
+    <span> ℃</span><br>
+    <span>湿度 :</span>
+    <span id="humidity"></span>
+    <span> %</span><br>
+    <span>風速 :</span>
+    <span id="speed"></span>
+    <span> m/s</span><br>
+    <span>天気 :</span>
+    <span id="weather"></span>
+    <div id="icon"><img id="img"></div>
+    </div>

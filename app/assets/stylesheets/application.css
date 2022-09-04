@@ -46,7 +46,12 @@ textarea  {
 }
 
 .card-post {
-        position: relative;
+        max-width: 25%;
+        /*position: relative;*/
+}
+
+.col-lg-4.card-post img {
+    padding-right: 10px;
 }
 
 .like {
@@ -59,4 +64,8 @@ textarea  {
         position: absolute;
         top: 0;
         left: 0;
+}
+
+.left {
+padding-left:0 !important;
 }
