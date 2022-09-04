@@ -100,11 +100,12 @@ ActiveRecord::Schema.define(version: 2022_08_20_094623) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.integer "customer_id"
+    t.integer "genre_id"
     t.string "title"
     t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -24,17 +24,21 @@ devise_for :customers,skip: [:passwords], controllers: {
   namespace :public do
    get "customers/confirmtion" => "customers#confirmtion"
    get "customers/good" => "customers#good"
+   get "homes/top" => "homes#top"
    patch "customers/withdrawal" => "customers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
    resources :posts do
     resources :likes, only: [:create, :destroy]
    end
    resources :comments, only: [:create]
+   resource :searchs, only: [:show]
   end
+
 
 
 #topページ
 root to:  'public/homes#top'
+
 get '/about' => 'public/homes#about',as:'about'
 
 #ゲストログイン

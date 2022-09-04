@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :customer
+  belongs_to :genre
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_customers, through: :likes, source: :customer

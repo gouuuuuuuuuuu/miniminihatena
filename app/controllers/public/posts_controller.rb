@@ -5,6 +5,7 @@ class Public::PostsController < ApplicationController
       redirect_to root_path, alert: 'ゲストユーザーは投稿できません。'
     end
     @post = Post.new
+    @genres = Genre.all
   end
 
   def index
@@ -48,7 +49,7 @@ class Public::PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :body, :post_image)
+    params.require(:post).permit(:title, :body, :post_image, :genre_id)
   end
 
 end

@@ -8,6 +8,7 @@
 <p><%= form.label :説明文 %><br>
 <%= form.text_area :body,placeholder: 'body' %>
 </p>
+<%= form.collection_select :genre_id, Genre.all, :id, :name %>
 
 <p><%= form.label :画像 %><br>
 
