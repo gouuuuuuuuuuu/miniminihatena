@@ -25,13 +25,13 @@ devise_for :customers,skip: [:passwords], controllers: {
    get "customers/confirmtion" => "customers#confirmtion"
    get "customers/good" => "customers#good"
    get "homes/top" => "homes#top"
+   get "searchs/search" => "searchs#search"
    patch "customers/withdrawal" => "customers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
    resources :posts do
     resources :likes, only: [:create, :destroy]
    end
    resources :comments, only: [:create]
-   resource :searchs, only: [:show]
   end
 
 

@@ -6,7 +6,7 @@
 <div class="mx-auto">
 <% if customer_signed_in? %>
   <div class="search_form">
-    <%= form_with url: public_searchs_path, local: true, method: :get do |f| %>
+    <%= form_with url: public_searchs_search_path, local: true, method: :get do |f| %>
       <%= f.text_field :word %>
       <%= f.submit "検索", class: "btn btn-primary" %>
     <% end %>

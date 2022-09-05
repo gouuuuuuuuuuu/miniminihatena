@@ -27,12 +27,12 @@
 
 <h3> <%= @post.likes.count %> いいね</h3>
 <% if customer_signed_in? && current_customer.already_liked?(@post) %>
-  <%= link_to public_post_like_path(@post), method: :delete, class: "like-btn" do %>
+  <%= link_to public_post_like_path(@post), method: :delete, class: "unlike-btn" do %>
 
   <i class="fas fa-heart"></i>
    <% end %>
 <% else %>
-  <%= link_to public_post_likes_path(@post),method: :post, class: "unlike-btn" do %>
+  <%= link_to public_post_likes_path(@post),method: :post, class: "like-btn" do %>
    <i class="far fa-heart"></i>
    <% end %>
 <% end %>

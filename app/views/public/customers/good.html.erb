@@ -1,8 +1,5 @@
-<h3>いいねしている投稿</h3>
-<% @customer.liked_posts.each do |postss| %>
-
-  <%= postss.title %>
-   <%= postss.body %>
-<% end %>
-
 <h3>いいね (全<%= @customer.likes.size%>件)</h3>
+<% @customer.liked_posts.each do |postss| %>
+・<%= postss.title %>
+<%= postss.body %></br>
+<% end %>
