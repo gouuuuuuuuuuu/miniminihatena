@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_customers, through: :likes, source: :customer
 
-  validates :body, {presence: true, lengh: {maximum: 2}}
+  #validates :body, {presence: true, lengh: {maximum: 2}}
 
   has_one_attached :post_image
 

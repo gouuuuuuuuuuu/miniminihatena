@@ -17,7 +17,7 @@
 
 <div class="genre-list">
 <% @genres.each do | genre | %>
-  <p><%= link_to genre.name, public_homes_top_path(genre.id) %></p>
+  <p><%= link_to genre.name, public_homes_top_path(genre.id), class: "link" %></p>
 </div>
 <% end %>
 </div>
@@ -51,9 +51,9 @@
   </tr>
    </thead>
     </table>
- <%= link_to public_post_path(postss.id) do %>
+ <%= link_to public_post_path(postss.id), class: "link" do %></a>
    <div class="box1 px-3 left">
-<div><%= postss.title %></div>
+<div><%= postss.title.truncate(53) %></div>
 <%= image_tag postss.get_post_image, class:"post-index-img" %>
 </div>
  <% end %>

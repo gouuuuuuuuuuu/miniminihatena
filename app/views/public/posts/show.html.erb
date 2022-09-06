@@ -11,6 +11,11 @@
 
 説明 <%= @post.body %> <br>
 
+<p>画像<br>
+<%= image_tag @post.get_post_image, class:"post-index-img" %>
+
+
+
 コメントをする
 
 <%= form_with(model:[@post, @comment], url: public_comments_path, method: :post) do |f| %>
