@@ -69,19 +69,15 @@ No.<%= @customer.id %></br>
 	<% end %></br>
 </div>
 
-<div class="col-2">
+<div class="container left">
+ <div class="text-left">
 <%= link_to '編集する', edit_admin_customer_path(@customer), class: "btn btn-success" %>
-</div>
-
- <%= link_to "削除する", admin_customer_path(id: @customer.id), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
-
-
-<div class="col-4">
 <%= link_to '投稿一覧を見る', admin_posts_path(customer_id: @customer.id), class: "btn btn-primary" %>
-</div>
-<div class="col-8">
-</div>
+<%= link_to "会員を削除する", admin_customer_path(id: @customer.id), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
 </div>
 </div>
 </div>
+</div>
+</div>
+
 
