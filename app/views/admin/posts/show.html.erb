@@ -1,4 +1,5 @@
-<h2>投稿詳細</h2>
+<h2><%= @post.customer.last_name + @post.customer.first_name %>投稿詳細</h2>
+<%= link_to '会員詳細に戻る', admin_customer_path(@post.customer.id), class: "btn btn-success" %>
 
 
 <div class="container">

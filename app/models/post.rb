@@ -1,9 +1,10 @@
 class Post < ApplicationRecord
   belongs_to :customer
-  belongs_to :genre
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_customers, through: :likes, source: :customer
+  has_many :post_genres, dependent: :destroy
+  has_many :genres, through: :post_genres
 
   #validates :body, {presence: true, lengh: {maximum: 2}}
 

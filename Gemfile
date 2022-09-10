@@ -63,3 +63,5 @@ gem 'kaminari','~> 1.2.1'
 gem "news-api"
 
 gem 'dotenv-rails'
+
+gem 'gon'

@@ -1,6 +1,4 @@
-
-
-const API_KEY = "67bbfe1e0176d3ef4d0fc1bfadd6b225";
+const API_KEY = gon.weather_api_key
 
 /* global $*/
 $(function(){
@@ -10,7 +8,7 @@ $(function(){
       dataType : 'jsonp',
     }).done(function (data){
       //通信成功
-       // 位置
+      // 位置
       $('#place').text(data.name);
       // 最高気温
       $('#temp_max').text(data.main.temp_max);
@@ -22,7 +20,7 @@ $(function(){
       $('#speed').text(data.wind.speed);
       // 天気
       $('#weather').text(data.weather[0].main);
-       // 天気アイコン
+      // 天気アイコン
       $('.weather_info img').attr("src","http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
       $('weather_info img').attr("alt",data.weather[0].main);
     }).fail(function (data) {

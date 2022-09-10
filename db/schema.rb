@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_20_094623) do
+ActiveRecord::Schema.define(version: 2022_09_10_075230) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -99,9 +99,17 @@ ActiveRecord::Schema.define(version: 2022_08_20_094623) do
     t.index ["post_id"], name: "index_likes_on_post_id"
   end
 
+  create_table "post_genres", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "genre_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_post_genres_on_genre_id"
+    t.index ["post_id"], name: "index_post_genres_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "customer_id"
-    t.integer "genre_id"
     t.string "title"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
@@ -114,4 +122,6 @@ ActiveRecord::Schema.define(version: 2022_08_20_094623) do
   add_foreign_key "comments", "posts"
   add_foreign_key "likes", "customers"
   add_foreign_key "likes", "posts"
+  add_foreign_key "post_genres", "genres"
+  add_foreign_key "post_genres", "posts"
 end

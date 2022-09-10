@@ -34,12 +34,19 @@ class Public::PostsController < ApplicationController
     redirect_to  public_post_path(params[:id])
   end
 
-  def create
-    @post = Post.new(post_params)
-    @post.customer_id = current_customer.id
-    @post.save
-    redirect_to public_posts_path
-  end
+ def create
+   @post = Post.new(post_params)
+   @post.customer_id = current_customer.id
+    #params[:post][:genre] ? @post.genre = params[:post][:genre].join(",") : false #・・・②
+    if @post.save
+      redirect_to public_posts_path(@post.id)
+    else
+      @genres = Genre.all
+      render :new
+    end
+ end
+
+
 
   def destroy
   @post= Post.find(params[:id])
@@ -49,7 +56,7 @@ class Public::PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :body, :post_image, :genre_id)
+    params.require(:post).permit(:title, :body, :post_image, genre_ids: [])
   end
 
 end

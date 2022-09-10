@@ -1,8 +1,8 @@
 class Admin::PostsController < ApplicationController
   before_action :authenticate_customer
  def index
-    @posts = Post.where(customer_id: params[:customer_id])
-    #@post = Post.new
+   @customer = Customer.find(params[:customer_id])
+   @posts = @customer.posts
  end
 
  def show

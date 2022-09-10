@@ -1,6 +1,5 @@
-<h3>過去の投稿 (全<%= @posts.size%>件)</h3>
-<%#= link_to '会員詳細に戻る', admin_customer_path(@customer.id), class: "btn btn-success" %>
-<%#= @posts.customer.last_name + @posts.customer.first_name %>
+<h3><%= @customer.last_name + @customer.first_name %>さん過去の投稿 (全<%= @posts.size%>件)</h3>
+<%= link_to '会員詳細に戻る', admin_customer_path(@customer.id), class: "btn btn-success" %>
 
 <table class="table table-striped">
   <thead>

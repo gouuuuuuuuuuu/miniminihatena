@@ -14,7 +14,11 @@
 <p>画像<br>
 <%= image_tag @post.get_post_image, class:"post-index-img" %>
 
-
+<% if @post.genres.any? %>
+  <% @post.genres.each do |genre| %>
+    <%= genre.name %>
+  <% end %>
+<% end %>
 
 コメントをする
 
