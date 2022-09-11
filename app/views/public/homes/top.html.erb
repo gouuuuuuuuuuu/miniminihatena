@@ -13,14 +13,13 @@
 </div>
 
 
-<div class="genre-list">
-<% @genres.each do | genre | %>
-  <p><%= link_to genre.name, public_homes_top_path(genre_id: genre.id), class: "link" %></p>
-</div>
-<% end %>
-</div>
 
 <div class="container">
+ <div class="genre-list d-flex flex-wrap bd-highlight justify-content-center">
+<% @genres.each do | genre | %>
+  <div class="p-2 bd-highlight mx-3"><%= link_to genre.name, public_homes_top_path(genre_id: genre.id), class: "link" %></div>
+<% end %>
+</div>
 <div class="row">
 
 
@@ -85,8 +84,9 @@
     </div>
 
 
-
+ <div class="d-flex flex-wrap bd-highlight justify-content-center">
 <%= render partial: "data", collection: @news, as: "news" %>
+</div>
 
 
 　　<span id="back">

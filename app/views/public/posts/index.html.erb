@@ -6,6 +6,7 @@
       <th></th>
       <th>タイトル</th>
       <th>説明</th>
+      <th>いいね</th>
     </tr>
   </thead>
   <tbody>
@@ -15,12 +16,17 @@
 
       </td>
       <td>
-        <%= postss.title %>
+         <%= link_to public_post_path(postss.id) do %>
+        <%= postss.title.truncate(25) %>
+        <% end %>
       </td>
       <td>
          <%= link_to public_post_path(postss.id) do %>
-        <%= postss.body %>
+        <%= postss.body.truncate(25) %>
          <% end %>
+      </td>
+      <td>
+        <%= postss.liked_customers.count %> いいね
       </td>
     </tr>
     <% end %>
