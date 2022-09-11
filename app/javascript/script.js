@@ -3,6 +3,7 @@ const API_KEY = gon.weather_api_key
 /* global $*/
 $(function(){
   $('#btn').on('click', function() {
+
     $.ajax({
       url: "https://api.openweathermap.org/data/2.5/weather?q=" + $('#cityname').val() + "&units=metric&appid=" + API_KEY,
       dataType : 'jsonp',

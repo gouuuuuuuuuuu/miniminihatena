@@ -72,9 +72,17 @@ width:1000px;
 height:30px;
 }
 
-.posttextbody {
+.postbody {
 width:1000px;
+height:500px;
+}
 
-
+#back {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+#back img {
+  width: 50px;
 }
 
