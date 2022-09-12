@@ -5,9 +5,12 @@
 <h2>みにみにハテナ<i class="fas fa-question-square"></i></h2>
 <div class="mx-auto">
   <div class="search_form">
-    <%= form_with url: public_searchs_search_path, local: true, method: :get do |f| %>
-      <%= f.text_field :word %>
+    <%= form_with url: public_homes_top_path, local: true, method: :get do |f| %>
+      <%= f.text_field :word, value: params[:word] %>
       <%= f.submit "検索", class: "btn btn-primary" %>
+      <% if params[:word] %>
+      <%= @count %>件
+      <% end %>
     <% end %>
   </div>
 </div>
@@ -24,7 +27,7 @@
 
 
 <% @posts.each do |postss| %>
-<div class="col-lg-4 card-post" >
+<div class="col-lg-4 card-post d-flex flex-column" >
  <table>
   <thead>
    <tr>
@@ -48,8 +51,8 @@
   </tr>
    </thead>
     </table>
- <%= link_to(public_post_path(postss.id), class: "link") do %>
-   <div class="box1 px-3 left">
+ <%= link_to(public_post_path(postss.id), class: "link h-100") do %>
+   <div class="box1 px-3 left d-flex h-100 flex-column justify-content-between">
 <div><%= postss.title.truncate(53) %></div>
 <%= image_tag postss.get_post_image, class:"post-index-img" %>
 </div>

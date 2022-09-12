@@ -3,15 +3,16 @@
 
 <div class="container">
 <div class="row">
-<div class="col-5">
+<div class="col-1">
 </div>
-<div class="col-4">
+<div class="col-7">
 
-タイトル <%= @post.title %></br>
 
-説明 <%= @post.body %> <br>
+<h2><%= @post.titlee, class: "posttext"%></h2></br>
 
-<p>画像<br>
+
+<p><%= @post.body %></p><br>
+
 <%= image_tag @post.get_post_image, class:"post-index-img" %>
 
 <% if @post.genres.any? %>

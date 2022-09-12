@@ -2,14 +2,14 @@
 <%= form_with model: @post, url: public_posts_path, local: true do |form| %>
 
 <p><%= form.label :タイトル %><br>
-<%= form.text_field :title,placeholder: 'title' %>
+<%= form.text_field :title,placeholder: 'title', class: "posttext"%>
 </p>
 
 <p><%= form.label :説明文 %><br>
-<%= form.text_area :body,placeholder: 'body' %>
+<%= form.text_area :body,placeholder: 'body', class: "postbody" %>
 </p>
 
-       
+
           <%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
       <%= b.label { b.check_box + b.text } %>
     <% end %>
@@ -20,7 +20,7 @@
  <%= form.file_field :post_image, placeholder: "プロフィール画像", accept: "image/*" %>
  </p>
 
-<p><%= form.submit '投稿する', class: "btn btn-success" %>
+<p><%= form.submit '投稿する', class:"btn btn-success"%>
 </p>
 
 <% end %>

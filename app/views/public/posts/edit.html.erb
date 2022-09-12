@@ -1,21 +1,21 @@
 <h4>投稿編集</h4>
 <div class="container">
+ <div class='row'>
 <div class="mx-auto">
 <%= form_with model: @post, url: public_post_path(@post.id) do |f| %>
-<div class='row'>
 
-<div class="col-6 mb-4">
+<div class="col-2">
 <p>タイトル
 </div>
-<div class="col-6">
- <%= f.text_field :title, class : "posttext" %></p>
+<div class="col-8">
+ <%= f.text_field :title, class: "posttext" %></p>
 </div>
 
-<div class="col-6 mb-4">
+<div class="col-2">
 <p>説明
 </div>
-<div class="col-6">
-  <%= f.text_area :body, class : "postbody" %></p>
+<div class="col-8">
+  <%= f.text_area :body, class: "postbody" %></p>
 </div>
 
 <p><%= f.label :画像 %><br>
@@ -23,11 +23,10 @@
  <%= f.file_field :post_image, placeholder: "プロフィール画像", accept: "image/*" %>
  </p>
 
-
-<div class="col-3">
-</div>
-<div class="col-9">
+<div class="container">
+ <div class="text-right">
 <%= f.submit '変更を保存', class: "btn btn-success" %>
+</div>
 </div>
 <% end %>
 
