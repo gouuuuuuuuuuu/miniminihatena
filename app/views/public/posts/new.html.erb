@@ -9,10 +9,9 @@
 <%= form.text_area :body,placeholder: 'body', class: "postbody" %>
 </p>
 
-
-          <%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
-      <%= b.label { b.check_box + b.text } %>
-    <% end %>
+<%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
+<%= b.label { b.check_box + b.text } %>
+<% end %>
 
 
 <p><%= form.label :画像 %><br>

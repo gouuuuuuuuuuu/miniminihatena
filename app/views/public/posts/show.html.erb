@@ -1,25 +1,23 @@
 <h2>投稿詳細</h2>
-
-
 <div class="container">
 <div class="row">
 <div class="col-1">
 </div>
 <div class="col-7">
 
+<h2><%= @post.title %></h2></br>
 
-<h2><%= @post.titlee, class: "posttext"%></h2></br>
+<% if @post.genres.any? %>
+<% @post.genres.each do |genre| %>
+<%= genre.name %>
+<% end %>
+<% end %>
 
+<%= image_tag @post.get_post_image, class: "post-index-img" %>
 
 <p><%= @post.body %></p><br>
 
-<%= image_tag @post.get_post_image, class:"post-index-img" %>
 
-<% if @post.genres.any? %>
-  <% @post.genres.each do |genre| %>
-    <%= genre.name %>
-  <% end %>
-<% end %>
 
 コメントをする
 

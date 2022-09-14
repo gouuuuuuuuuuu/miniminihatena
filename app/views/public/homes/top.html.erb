@@ -35,18 +35,9 @@
  <%= postss.customer.nickname %>
  </th>
  <th>
- <span class="like">
-     <% if customer_signed_in? && current_customer.already_liked?(postss) %>
-  <%= link_to public_post_like_path(postss.id, current_customer.likes.find_by(post_id: postss.id).id), method: :delete, class: "unlike-btn" do %>
-  <i class="fas fa-heart"></i>
-   <% end %>
-<% else %>
-  <%= link_to public_post_likes_path(postss.id),method: :post, class: "like-btn" do %>
-   <i class="far fa-heart"></i>
-   <% end %>
-<% end %>
-<%= postss.liked_customers.count %>
-</span>
+  <span class="like" id="post-<%= postss.id %>">
+   <%= render partial: "public/likes/like", locals: { post: postss } %>
+  </span>
  </th>
   </tr>
    </thead>

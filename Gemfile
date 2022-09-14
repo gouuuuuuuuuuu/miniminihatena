@@ -65,3 +65,7 @@ gem "news-api"
 gem 'dotenv-rails'
 
 gem 'gon'
+
+gem 'devise-i18n'
+
+gem 'rails-i18n'
