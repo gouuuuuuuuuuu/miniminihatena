@@ -6,7 +6,7 @@ class Post < ApplicationRecord
   has_many :post_genres, dependent: :destroy
   has_many :genres, through: :post_genres
 
-  #validates :body, {presence: true, lengh: {maximum: 2}}
+  validates :body, {presence: true, length: {maximum: 2}}
 
   has_one_attached :post_image
 

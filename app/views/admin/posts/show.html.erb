@@ -1,7 +1,7 @@
 <h2><%= @post.customer.last_name + @post.customer.first_name %>投稿詳細</h2>
 <div class="container">
  <div class="text-right">
-<%= link_to '会員詳細に戻る', admin_customer_path(@post.customer.id), class: "btn btn-success" %>
+<%= link_to '投稿一覧に戻る', admin_posts_path(customer_id: @post.customer.id), class: "btn btn-success" %>
  </div>
   </div>
 
@@ -13,6 +13,12 @@
 
 <div class="col-7">
 <h2> <%= @post.title %></h2></br>
+<% if @post.genres.any? %>
+<% @post.genres.each do |genre| %>
+#<%= genre.name %>
+<% end %>
+<% end %>
+
 <p><%= @post.body %></p><br>
 
 <% @post.comments.each do |comment| %>
