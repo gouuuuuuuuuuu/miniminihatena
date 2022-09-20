@@ -21,9 +21,25 @@
 
 <p><%= @post.body %></p><br>
 
+
+コメント
 <% @post.comments.each do |comment| %>
-コメント <%= comment.comment_content %>
+<table>
+ <thead>
+  <tr>
+   <th>aaa</th>
+   <th><%= comment.created_at %></th>
+  </tr>
+  </thead>
+ <tbody>
+<tr>
+ <td></td>
+ <td><%= comment.comment_content %></td>
+</tr>
+</tbody>
+</table>
 <%= link_to "削除する",  admin_comment_path(comment), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %></br>
+
 <% end %>
 
 <%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
