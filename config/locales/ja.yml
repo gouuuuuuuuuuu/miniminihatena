@@ -27,3 +27,6 @@ ja:
         remember_me: "次回から自動的にログイン"
     models:
       customer: "ユーザ"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"

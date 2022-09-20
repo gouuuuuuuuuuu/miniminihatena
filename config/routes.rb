@@ -34,8 +34,6 @@ devise_for :customers,skip: [:passwords], controllers: {
    resources :comments, only: [:create]
   end
 
-
-
 #topページ
 root to:  'public/homes#top'
 
