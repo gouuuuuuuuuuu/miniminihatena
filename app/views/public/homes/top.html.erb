@@ -16,7 +16,7 @@
 </div>
 
 
-
+<div id='post-pagenate'>
 <div class="container">
  <div class="genre-list d-flex flex-wrap bd-highlight justify-content-center">
 <% @genres.each do | genre | %>
@@ -51,7 +51,9 @@
  </div>
  <% end %>
 </div>
- </div>
+</div>
+</div>
+<%= link_to_next_page @posts, 'もっと見る', remote: true, class: 'more-link', id: 'more-link' %>
 
 <div class="weather_info">
    <h3>天気予報</h3>

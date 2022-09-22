@@ -38,8 +38,12 @@
 </tr>
 </tbody>
 </table>
-<%= link_to "削除する",  admin_comment_path(comment), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %></br>
 
+<div class="container">
+<div class="text-right">
+<%= link_to "削除する",  admin_comment_path(comment), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %></br>
+</div>
+</div>
 <% end %>
 
 <%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
