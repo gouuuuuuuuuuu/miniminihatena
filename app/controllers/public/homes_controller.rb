@@ -1,6 +1,6 @@
 class Public::HomesController < ApplicationController
   def top
-    @posts = Post.all.order(created_at:"desc").page(params[:page]).per(1)
+    @posts = Post.all.order(created_at:"desc").page(params[:page]).per(10)
     if params[:genre_id].present?
        #binding.pry
      post_ids = PostGenre.where(genre_id: params[:genre_id]).pluck(:post_id)
