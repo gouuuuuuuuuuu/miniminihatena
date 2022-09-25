@@ -44,7 +44,7 @@
     </table>
  <%= link_to(public_post_path(postss.id), class: "link h-100") do %>
    <div class="box1 px-3 left d-flex h-100 flex-column justify-content-between">
-<div><%= postss.title.truncate(53) %></div>
+<div class="aaa"><%= postss.title.truncate(53) %></div>
 <%= image_tag postss.get_post_image, class:"post-index-img" %>
 </div>
  <% end %>
