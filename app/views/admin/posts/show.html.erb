@@ -27,8 +27,8 @@
 <table>
  <thead>
   <tr>
-   <th>aaa</th>
-   <th><%= comment.created_at %></th>
+   <th><%=comment.customer.nickname %></th>
+   <th><%= I18n.l comment.created_at %></th>
   </tr>
   </thead>
  <tbody>

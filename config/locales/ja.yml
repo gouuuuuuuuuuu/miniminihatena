@@ -23,7 +23,9 @@ ja:
     attributes:
       customer:
         current_password: "現在のパスワード"
-        name: 名前
+        name: "名前"
+        first_name_kana: "セイ"
+        last_name_kana: "メイ"
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "確認用パスワード"

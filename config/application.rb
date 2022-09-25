@@ -24,9 +24,11 @@ module Miniminihatena
     #　以下の記述を追記する(設定必須)
     # デフォルトのlocaleを日本語(:ja)にする
     config.i18n.default_locale = :ja
-     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 
     # タイムゾーンを日本時間に設定
     config.time_zone = 'Asia/Tokyo'
+    
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
   end
 end
