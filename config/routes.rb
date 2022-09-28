@@ -31,6 +31,7 @@ devise_for :customers,skip: [:passwords], controllers: {
    resources :posts do
     resources :likes, only: [:create, :destroy]
    end
+   resources :genres, only: [:create, :index]
    resources :comments, only: [:create]
   end
 

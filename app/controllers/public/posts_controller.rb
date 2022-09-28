@@ -11,6 +11,9 @@ class Public::PostsController < ApplicationController
   def index
     @posts = Post.where(customer_id: current_customer.id)
     @post = Post.new
+    if params[:tag]
+      Tag.create(name: params[:tag])
+    end
   end
 
   def show
@@ -35,6 +38,7 @@ class Public::PostsController < ApplicationController
   end
 
  def create
+  # binding.pry
    @post = Post.new(post_params)
    @post.customer_id = current_customer.id
     #params[:post][:genre] ? @post.genre = params[:post][:genre].join(",") : false #・・・②
@@ -56,7 +60,8 @@ class Public::PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :body, :post_image, genre_ids: [])
+    { title: params[:post][:title], body: params[:post][:body], post_image: params[:post][:post_image], genre_ids: params[:post][:genre_ids] }
+    # params.require(:post).permit(:title, :body, :post_image, genre_ids: [])
   end
 
 end

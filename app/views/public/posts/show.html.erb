@@ -28,9 +28,21 @@
       <% end %>
     
      コメント一覧
-    
-    <% @comments.each do |comment| %>
-      <%= comment.comment_content %>
+<% @post.comments.each do |comment| %>
+<table>
+ <thead>
+  <tr>
+   <th><%=comment.customer.nickname %></th>
+   <th><%= I18n.l comment.created_at %></th>
+  </tr>
+  </thead>
+ <tbody>
+<tr>
+ <td></td>
+ <td><%= comment.comment_content %></td>
+</tr>
+</tbody>
+</table>
     <% end %>
     
     <h3> <%= @post.likes.count %> いいね</h3>
