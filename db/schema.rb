@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2022_09_10_075230) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+    t.integer "customer_id"
   end
 
   create_table "likes", force: :cascade do |t|

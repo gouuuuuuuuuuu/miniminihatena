@@ -12,7 +12,7 @@ class Public::HomesController < ApplicationController
     require 'news-api'
     news = News.new(ENV['NEWS_API_KEY'])
     @news = news.get_top_headlines(country: 'jp')
-    @genres = Genre.all
+    @genres = Genre.where(customer_id: nil)
     gon.weather_api_key = ENV['WEATHER_API_KEY']
     @count = @posts.count
   end

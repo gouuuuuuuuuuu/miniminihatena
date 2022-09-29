@@ -6,7 +6,7 @@ class Public::GenresController < ApplicationController
 
  def create
   # binding.pry
-  @genres = Genre.new(genre_params)
+  @genres = current_customer.genres.new(genre_params)
   @genres.save
  end
 
