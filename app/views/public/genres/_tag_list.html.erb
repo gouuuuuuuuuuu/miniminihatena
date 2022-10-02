@@ -8,7 +8,7 @@
 <%= form.text_area :body,placeholder: 'body', class: "postbody" %>
 </p>
 
-<%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
+<%= form.collection_check_boxes(:genre_ids, Genre.where(customer_id:[current_customer.id,nil]), :id, :name) do |b| %>
 <%= b.label { b.check_box + b.text } %>
 <% end %>
 

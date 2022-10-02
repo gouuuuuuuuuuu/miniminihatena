@@ -1,7 +1,7 @@
 class Admin::GenresController < ApplicationController
   before_action :authenticate_customer
 def index
-  @genres = Genre.all
+  @genres = Genre.where(customer_id: nil)
 end
 
  def edit

@@ -5,7 +5,7 @@ class Public::PostsController < ApplicationController
       redirect_to root_path, alert: 'ゲストユーザーは投稿できません。'
     end
     @post = Post.new
-    @genres = Genre.all
+    @genres = Genre.where(customer_id:[current_customer.id,nil])
   end
 
   def index
