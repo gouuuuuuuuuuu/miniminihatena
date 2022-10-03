@@ -1,11 +1,11 @@
-<h2><%= @post.customer.last_name + @post.customer.first_name %>投稿詳細</h2>
+<h2><%= @post.customer.last_name + @post.customer.first_name %>さんの投稿詳細</h2>
 <div class="container">
- <div class="text-right">
-<%= link_to '投稿一覧に戻る', admin_posts_path(customer_id: @post.customer.id), class: "btn btn-success" %>
- </div>
-  </div>
+ 
+<h5>投稿全体編集、削除</h5>
+<%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
+ <%= link_to "削除する", admin_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
 
-
+  
 <div class="container">
 <div class="row">
 <div class="col-1">
@@ -19,10 +19,12 @@
 <% end %>
 <% end %>
 
+ <%= image_tag @post.get_post_image, class: "post-index-img" %>
+ <p></p>
 <p><%= @post.body %></p><br>
 
 
-コメント
+<h4>コメント</h4>
 <% @post.comments.each do |comment| %>
 <table>
  <thead>
@@ -38,16 +40,11 @@
 </tr>
 </tbody>
 </table>
-
-<div class="container">
-<div class="text-right">
-<%= link_to "削除する",  admin_comment_path(comment), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %></br>
-</div>
-</div>
 <% end %>
 
-<%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
- <%= link_to "削除する", admin_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
 </div>
 </div>
 </div>
+ <div class="text-right">
+<%= link_to '投稿一覧に戻る', admin_posts_path(customer_id: @post.customer.id), class: "btn btn-success" %>
+ </div>

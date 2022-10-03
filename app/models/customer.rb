@@ -6,7 +6,7 @@ class Customer < ApplicationRecord
     find_or_create_by!(email: 'guest@1111.com') do |customer|
       customer.password = SecureRandom.urlsafe_base64
       customer.first_name_kana = 'ゲスト'
-      customer.last_name_kana = 'ゲスト'
+      customer.last_name_kana = 'タラオ'
     end
   end
 

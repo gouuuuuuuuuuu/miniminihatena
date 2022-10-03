@@ -45,12 +45,9 @@
 </table>
     <% end %>
     
-    <h3> <%= @post.likes.count %> いいね</h3>
-    
     <div id="post-<%= @post.id %>">
        <%= render partial: "public/likes/like", locals: { post: @post } %>
     </div>
-    
     
     <h2>いいねしたユーザー</h2>
     <% @post.liked_customers.each do |customer| %>
