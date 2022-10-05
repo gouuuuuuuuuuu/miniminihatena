@@ -9,12 +9,12 @@
     
     <% if @post.genres.any? %>
     <% @post.genres.each do |genre| %>
-    <%= genre.name %>
+    #<%= genre.name %>
     <% end %>
     <% end %>
     
     <%= image_tag @post.get_post_image, class: "post-index-img" %>
-    
+    <p></p>
     <p><%= @post.body %></p><br>
     
     
