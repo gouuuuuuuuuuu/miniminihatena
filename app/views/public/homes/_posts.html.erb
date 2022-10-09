@@ -1,24 +1,26 @@
 <div class="row">
-   <% posts.each do |postss| %>
+   <% posts.each do |post| %>
     <div class="col-lg-3">
      <div class="d-flex justify-content-between">
       <div class="d-flex align-items-center">
-       <strong><%= postss.customer.nickname %></strong>
+       <strong><%= post.customer.nickname %></strong>
       </div>
       <div>
-       <span id="post-<%= postss.id %>">
-        <%= render partial: "public/likes/like", locals: { post: postss } %>
+       <span id="post-<%= post.id %>">
+        <%= render partial: "public/likes/like", locals: { post: post } %>
        </span>
       </div>
      </div>
-     <%= link_to(public_post_path(postss.id), class: "link") do %>
-      <div style="margin-top: .5rem; height: 75px;"><%= postss.title.truncate(49) %></div>
+     <%= link_to(public_post_path(post.id), class: "link") do %>
+      <div style="margin-top: .5rem; height: 75px;"><%= post.title.truncate(49) %></div>
      <% end %> 
      <div>
-      <%= link_to(public_post_path(postss.id)) do %>
-       <%= image_tag postss.get_post_image, class:"posts-index-img img-fluid" %>
+      <%= link_to(public_post_path(post.id)) do %>
+       <%= image_tag post.get_post_image, class:"posts-index-img img-fluid" %>
       <% end %>
-      #<%= postss.genres.name %>
+      <% post.genres.each do |genre|%>
+        #<%= genre.name  %>
+      <%end%>
      </div>
     </div>
    <% end %>

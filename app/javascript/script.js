@@ -12,18 +12,18 @@ $(function(){
       // 位置
       $('#place').text(data.name);
       // 最高気温
-      $('#temp_max').text(data.main.temp_max);
+      $('#temp_max').text(data.main.temp_max + "℃");
       // 最低気温
-      $('#temp_min').text(data.main.temp_min);
+      $('#temp_min').text(data.main.temp_min + "℃");
       //湿度
-      $('#humidity').text(data.main.humidity);
+      $('#humidity').text(data.main.humidity + "%");
       //風速
-      $('#speed').text(data.wind.speed);
+      $('#speed').text(data.wind.speed + "m/s");
       // 天気
-      $('#weather').text(data.weather[0].main);
+      // $('#weather').text(data.weather[0].main);
       // 天気アイコン
-      $('.weather_info img').attr("src","http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
-      $('weather_info img').attr("alt",data.weather[0].main);
+      $('#weather img').attr("src","http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+      $('#weather img').attr("alt",data.weather[0].main);
     }).fail(function (data) {
       //通信失敗
           alert('通信に失敗しました。');

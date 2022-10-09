@@ -22,9 +22,9 @@
     コメントをする
     
     <%= form_with(model:[@post, @comment], url: public_comments_path, method: :post) do |f| %>
-      <%= f.text_area :comment_content %>
+      <%= f.text_area :comment_content, class: 'comment' %>
       <%= f.hidden_field :post_id, value: @post.id %>
-      <%= f.submit 'コメントする' %>
+      <%= f.submit 'コメントする',class: "comments" %>
       <% end %>
     
      コメント一覧

@@ -9,6 +9,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   resources :customers, only: [:index, :edit, :show, :update, :destroy]
   resources :posts, only: [:index, :edit, :show, :update, :destroy]
   resources :comments, only: [:destroy]
+  get "genres/by_customer_index" => "genres#by_customer_index"
 
   end
 
@@ -26,12 +27,13 @@ devise_for :customers,skip: [:passwords], controllers: {
    get "customers/good" => "customers#good"
    get "homes/top" => "homes#top"
    get "searchs/search" => "searchs#search"
+   get "genres/by_own_index" => "genres#by_own_index"
    patch "customers/withdrawal" => "customers#withdrawal"
    resources :customers, only: [:edit, :show, :update]
    resources :posts do
     resources :likes, only: [:create, :destroy]
    end
-   resources :genres, only: [:create, :index]
+   resources :genres, only: [:create, :index,:destroy]
    resources :comments, only: [:create]
   end
 

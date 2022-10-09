@@ -1,2 +1,2 @@
-$('#tags').html("<%= j(render "public/genres/tag_list", tags: @tags) %>");
+$('#tags').html("<%= j(render "public/genres/tag_list", { post: @post}) %>");
 $('.tag_field').val("");

@@ -3,6 +3,9 @@ class Admin::GenresController < ApplicationController
 def index
   @genres = Genre.where(customer_id: nil)
 end
+def by_customer_index
+ @genres = Genre.where.not(customer_id: nil)
+end
 
  def edit
   @genre=Genre.find(params[:id])
@@ -23,7 +26,12 @@ end
  def destroy
   @genre= Genre.find(params[:id])
   @genre.destroy
-  redirect_to admin_genres_path
+  
+  if params[:mode] == 'genres'
+   redirect_to admin_genres_path
+  else
+   redirect_to admin_genres_by_customer_index_path
+  end
  end
 
  private

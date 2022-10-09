@@ -1,0 +1,24 @@
+<div class="mx-auto">
+<h2>設定ジャンル一覧 (全<%= @genres.size%>件)、削除</h2>
+
+  <table class="table-striped">
+  	<thead>
+  	  <tr>
+  	    <th>ジャンル</th>
+  	  </tr>
+  	</thead>
+  	<% @genres.each do |genre|%>
+  	<tbody>
+  	  <tr>
+  	    <td>
+  	     ・<%= genre.name %>
+  	     </div>
+  	    </td>
+  	    <td>
+  	     <%= link_to "削除する", public_genre_path(genre), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
+  	    </td>
+  	    </tr>
+  	</tbody>
+  	<% end %>
+  </table>
+  </div>

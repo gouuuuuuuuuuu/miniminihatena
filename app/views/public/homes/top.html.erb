@@ -7,9 +7,10 @@
   <div class="search_form">
     <%= form_with url: public_homes_top_path, local: true, method: :get do |f| %>
       <%= f.text_field :word, value: params[:word] %>
+      <%= @count %>件
       <%= f.submit "検索", class: "btn btn-primary" %>
       <% if params[:word] %>
-      <%= @count %>件
+      
       <% end %>
     <% end %>
   </div>
@@ -34,6 +35,41 @@
  </div>
 </div>
 
+
+<row>
+<table class="table">
+  <h3>天気予報</h3>
+    <label>都市名：</label>
+    <input id="cityname" type="text" size="14" maxlength="14" placeholder="Tokyo">
+    <button id="btn">検索</button><br>
+  <thead>
+    <tr>
+      <th scope="col">都市名</th>
+      <th scope="col">最高気温</th>
+      <th scope="col">最低気温</th>
+      <th scope="col">湿度</th>
+      <th scope="col">風速</th>
+      <th scope="col">天気</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="place"></td>
+      <td id="temp_max"></td>
+      <td id="temp_min"></td>
+      <td id="humidity"></td>
+      <td id="speed"></td>
+      <td id="weather">
+       <img id="img"></div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</row>
+
+
+<table>
 <div class="weather_info">
    <h3>天気予報</h3>
     <label>都市名：</label>
@@ -57,12 +93,13 @@
     <span id="weather"></span>
     <div id="icon"><img id="img"></div>
     </div>
+    </table>
 
-
+<div class="container">
  <div class="d-flex flex-wrap bd-highlight justify-content-center">
 <%= render partial: "data", collection: @news, as: "news" %>
+ </div>
 </div>
-
 
 　　<span id="back">
       <a href="#">

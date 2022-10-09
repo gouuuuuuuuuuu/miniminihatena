@@ -1,8 +1,8 @@
 <div id="tags" class="mx-auto">
-   <%= render partial: "public/genres/tag_list", locals: { post: @post, genres: @genres } %>
+   <%= render partial: "public/genres/tag_list", locals: { post: @post } %>
 </div>
 
-<div id="tag_form">
+<div id="tag_form" class="mx-auto" style="width: 1000px;">
   <%= form_with model: @genre, url: public_genres_path, method: :post, local: false do |f| %>
     <%= f.text_field :name, class: "tag_field" %>
     <%= f.submit 'タグを追加' %>
@@ -13,4 +13,6 @@
     <%#= submit_tag 'タグを追加' %>
 <%# end %>
 </div>
-
+<div style="width:100%; text-align: center">
+    <a href="#" onclick="document:getElementById('post_form').submit()" class="btn btn-success">投稿する</a>
+</div>
