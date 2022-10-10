@@ -13,13 +13,20 @@
     <% end %>
     <% end %>
     
+    
     <%= image_tag @post.get_post_image, class: "post-index-img" %>
     <p></p>
     <p><%= @post.body %></p><br>
     
+    <div class="container">
+    <div class="text-right">
+    <div id="post-<%= @post.id %>">
+      <%= render partial: "public/likes/like", locals: { post: @post } %>
+    </div>
+    </div>
+    </div>
     
-    
-    コメントをする
+    <div>コメントをする</div>
     
     <%= form_with(model:[@post, @comment], url: public_comments_path, method: :post) do |f| %>
       <%= f.text_area :comment_content, class: 'comment' %>
@@ -27,7 +34,7 @@
       <%= f.submit 'コメントする',class: "comments" %>
       <% end %>
     
-     コメント一覧
+     <div>コメント一覧</div>
 <% @post.comments.each do |comment| %>
 <table>
  <thead>
@@ -44,10 +51,6 @@
 </tbody>
 </table>
     <% end %>
-    
-    <div id="post-<%= @post.id %>">
-       <%= render partial: "public/likes/like", locals: { post: @post } %>
-    </div>
     
     <h2>いいねしたユーザー</h2>
     <% @post.liked_customers.each do |customer| %>

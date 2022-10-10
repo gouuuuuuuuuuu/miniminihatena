@@ -19,6 +19,8 @@ class Customer < ApplicationRecord
   validates :first_name_kana, presence: true, format: { with: /\A[\p{katakana}\p{blank}ー－]+\z/ , message: 'はカタカナで入力して下さい。'}
   validates :last_name_kana, presence: true, format: { with: /\A[\p{katakana}\p{blank}ー－]+\z/ , message: 'はカタカナで入力して下さい。'}
   
+   validates :nickname, {presence: true, length: {maximum: 15}}
+  
   def already_liked?(post)
     self.likes.exists?(post_id: post.id)
   end

@@ -1,7 +1,7 @@
 const API_KEY = gon.weather_api_key
 
 /* global $*/
-$(function(){
+$(document).on('turbolinks:load', function () {
   $('#btn').on('click', function() {
 
     $.ajax({

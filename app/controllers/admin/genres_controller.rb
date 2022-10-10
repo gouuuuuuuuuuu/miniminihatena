@@ -12,9 +12,13 @@ end
  end
 
  def update
-  @genres = Genre.find(params[:id])
-  @genres.update(genre_params)
-  redirect_to admin_genres_path(@genres[:id])
+  @genre = Genre.find(params[:id])
+  @genre.update(genre_params)
+  if @genre.customer_id.nil?
+    redirect_to admin_genres_path(@genre[:id])
+  else
+    redirect_to admin_genres_by_customer_index_path
+  end
  end
 
  def create
