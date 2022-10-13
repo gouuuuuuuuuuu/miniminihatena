@@ -5,36 +5,21 @@
  width: 100%;
  height: 230px;
  object-fit: cover;
+ 
 }
 
 .posts-index-img{
  width: 120%;
  height: 200px;
  object-fit: cover;
+ 
 }
 
 .left {
-    padding-right: 80px;
-    text-align: left;
+ padding-right: 80px;
+ text-align: left;
+ 
 }
-
-.like-btn {
- width: 25px;
- height: 30px;
- font-size: 25px;
- border: none;
- color: #808080;
- margin-left: 20px;
- }
-
-.unlike-btn {
- width: 25px;
- height: 30px;
- font-size: 25px;
- border: none;
- color: #e54747;
- margin-left: 20px;
- }
  
  /*ページネーション自体のデザイン*/
 // .pagination > li > a{
@@ -56,4 +41,29 @@
 
 .paginations {
  font-size: 20px;
+ 
+}
+
+.posttext {
+ width:1000px;
+ height:30px;
+ 
+}
+
+.postbody {
+ width:1000px;
+ height:500px;
+ 
+}
+
+
+.card-post {
+ max-width: 25%;
+ /*position: relative;*/
+ 
+}
+
+.col-lg-4.card-post img {
+ padding-right: 10px;
+ 
 }
