@@ -1,14 +1,14 @@
 <div class="mx-auto">
 <h2>ジャンル一覧 (全<%= @genres.size%>件)・追加</h2>
 
- <%= form_with model: Genre.new, url: admin_genres_path, method: :POST do |f| %>
- <%= f.text_field :name,placeholder: 'ジャンル名', class: "genretext" %>
- <%= f.submit '新規登録', class: "btn btn-success" %>
- <% end %>
+<%= form_with model: Genre.new, url: admin_genres_path, method: :POST do |f| %>
+  <%= f.text_field :name,placeholder: 'ジャンル名', class: "genretext" %>
+  <%= f.submit '新規登録', class: "btn btn-success" %>
+<% end %>
 
-  <table class="table-striped">
-  	<thead>
-  	  <tr>
+<table class="table-striped">
+   <thead>
+     <tr>
   	    <th>ジャンル</th>
   	  </tr>
   	</thead>
@@ -17,14 +17,14 @@
   	  <tr>
   	    <td>
   	     ・<%= genre.name %>
-  	     </div>
+</div>
   	    </td>
   	    <td>
-  	     <%= link_to "編集する",edit_admin_genre_path(genre),class: "btn btn-success" %>
-  	     <%= link_to "削除する", admin_genre_path(genre, mode: 'genres'), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
+  	      <%= link_to "編集する",edit_admin_genre_path(genre),class: "btn btn-success" %>
+  	      <%= link_to "削除する", admin_genre_path(genre, mode: 'genres'), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
   	    </td>
   	    </tr>
   	</tbody>
   	<% end %>
-  </table>
-  </div>
+</table>
+</div>
