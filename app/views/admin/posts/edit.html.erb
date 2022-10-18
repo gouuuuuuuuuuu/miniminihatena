@@ -2,26 +2,26 @@
 <div class="container">
 <div class='row'>
 <div class="mx-auto">
+ 
 <%= form_with model: @post, url: admin_post_path(@post.id) do |f| %>
 
-
 <div class="col-2">
-<p>タイトル
+  <p>タイトル
 </div>
 <div class="col-8">
- <%= f.text_field :title, class: "posttext"%></p>
+  <%= f.text_field :title, class: "posttext"%></p>
 </div>
 
 <p>ジャンル選択
 <div>
-<%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
-<%= b.label { b.check_box + b.text } %>
-<% end %>
+  <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
+  <%= b.label { b.check_box + b.text } %>
+  <% end %>
 </p>
 </div>
 
 <div class="col-2">
-<p>説明
+  <p>説明
 </div>
 <div class="col-8">
   <%= f.text_area :body, class: "postbody"%></p>
@@ -30,37 +30,34 @@
 コメント
 <% @post.comments.each do |comment| %>
 <table>
- <thead>
-  <tr>
-   <th><%=comment.customer.nickname %></th>
-   <th><%= I18n.l comment.created_at %></th>
-  </tr>
+  <thead>
+    <tr>
+      <th><%=comment.customer.nickname %></th>
+      <th><%= I18n.l comment.created_at %></th>
+    </tr>
   </thead>
- <tbody>
-<tr>
- <td></td>
- <td><%= comment.comment_content %></td>
-</tr>
-</tbody>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><%= comment.comment_content %></td>
+    </tr>
+  </tbody>
 </table>
 
 <div class="container">
 <div class="text-right">
 <div class="left">
-<%= link_to "削除する",  admin_comment_path(comment), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %></br>
+  <%= link_to "削除する",  admin_comment_path(comment), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %></br>
 </div>
 </div>
 </div>
 <% end %>
 
-
-
-
 <div class="container">
- <div class="text-right">
-<%= f.submit '変更を保存', class: "btn btn-success" %>
+<div class="text-right">
+  <%= f.submit '変更を保存', class: "btn btn-success" %>
 </div>
-  </div>
+</div>
 <% end %>
 </div>
 </div>

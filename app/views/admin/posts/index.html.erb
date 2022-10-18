@@ -1,10 +1,10 @@
 <h3><%= @customer.last_name + @customer.first_name %>さん過去の投稿 (全<%= @posts.size%>件)</h3>
 
 <div class="container">
- <div class="text-right">
-<%= link_to '会員詳細に戻る', admin_customer_path(@customer.id), class: "btn btn-success" %>
- </div>
-  </div>
+<div class="text-right">
+  <%= link_to '会員詳細に戻る', admin_customer_path(@customer.id), class: "btn btn-success" %>
+</div>
+</div>
 
 <table class="table table-striped">
   <thead>
@@ -18,24 +18,22 @@
     <% @posts.each do |postss| %>
     <tr>
       <td>
-         <%= link_to admin_post_path(postss.id) do %>
-          <%= postss.title.truncate(25) %>
-          <% end %>
+        <%= link_to admin_post_path(postss.id) do %>
+        <%= postss.title.truncate(25) %>
+        <% end %>
       </td>
       <td>
         <%= link_to admin_post_path(postss.id) do %>
         <%= postss.body.truncate(25) %>
-         <% end %>
+        <% end %>
       </td>
       <td>
         <%= postss.liked_customers.count %> いいね
       </td>
     </tr>
     <% end %>
-    </tbody>
+  </tbody>
 </table>
 </div>
 </div>
 </div>
-
-

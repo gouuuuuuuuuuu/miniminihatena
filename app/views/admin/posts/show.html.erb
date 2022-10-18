@@ -2,49 +2,49 @@
 <div class="container">
  
 <h5>投稿全体編集、削除</h5>
-<%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
- <%= link_to "削除する", admin_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
+  <%= link_to '編集する',edit_admin_post_path, class: "btn btn-success" %>
+  <%= link_to "削除する", admin_post_path(@post), method: :delete,data: { confirm: '本当に消しますか？' },class: "btn btn-danger" %>
 
-  
 <div class="container">
 <div class="row">
+ 
 <div class="col-1">
 </div>
 
 <div class="col-7">
-<h2> <%= @post.title %></h2></br>
-<% if @post.genres.any? %>
-<% @post.genres.each do |genre| %>
-#<%= genre.name %>
-<% end %>
-<% end %>
+  <h2> <%= @post.title %></h2><br>
+    <% if @post.genres.any? %>
+      <% @post.genres.each do |genre| %>
+      #<%= genre.name %>
+      <% end %>
+    <% end %>
 
- <%= image_tag @post.get_post_image, class: "post-index-img" %>
- <p></p>
-<p><%= @post.body %></p><br>
+<%= image_tag @post.get_post_image, class: "post-index-img" %>
+  <p></p>
+  <p><%= @post.body %></p><br>
 
 
 <h4>コメント</h4>
-<% @post.comments.each do |comment| %>
+  <% @post.comments.each do |comment| %>
 <table>
- <thead>
-  <tr>
-   <th><%=comment.customer.nickname %></th>
-   <th><%= I18n.l comment.created_at %></th>
-  </tr>
+  <thead>
+    <tr>
+      <th><%=comment.customer.nickname %></th>
+      <th><%= I18n.l comment.created_at %></th>
+    </tr>
   </thead>
- <tbody>
-<tr>
- <td></td>
- <td><%= comment.comment_content %></td>
-</tr>
-</tbody>
+  <tbody>
+    <tr>
+      <td></td>
+      <td><%= comment.comment_content %></td>
+    </tr>
+  </tbody>
 </table>
 <% end %>
 
 </div>
 </div>
 </div>
- <div class="text-right">
-<%= link_to '投稿一覧に戻る', admin_posts_path(customer_id: @post.customer.id), class: "btn btn-success" %>
- </div>
+<div class="text-right">
+  <%= link_to '投稿一覧に戻る', admin_posts_path(customer_id: @post.customer.id), class: "btn btn-success" %>
+</div>
