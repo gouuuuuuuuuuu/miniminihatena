@@ -5,14 +5,15 @@
 <div class="col-md-4">
 登録情報
 </div>
+
 <div class="col-md-8 mb-4">
 <%= link_to '編集する',edit_public_customer_path, class: "btn btn-success" %>
 </div>
 
 <table class="table table-striped">
-	<thead>
-		<tr>
-			<th>ニックネーム</th>
+  <thead>
+	  <tr>
+		  <th>ニックネーム</th>
 			<th><%= @customer.nickname %></th>
 		</tr>
 		<tr>
@@ -23,7 +24,7 @@
 		<tr>
 			<th>カナ</th>
 			<th><%= @customer.last_name_kana %></th>
-				<th><%= @customer.first_name_kana %></th>
+			<th><%= @customer.first_name_kana %></th>
 		</tr>
 		<tr>
 			<th>郵便番号</th>
@@ -47,6 +48,7 @@
 <div class="col-md-4">
 ジャンル削除</br>
 </div>
+
 <div class="col-md-8 mb-4">
 <%= link_to '一覧を見る', public_genres_by_own_index_path, class: "btn btn-primary" %>
 </div>
@@ -54,6 +56,7 @@
 <div class="col-md-4">
 いいね一覧</br>
 </div>
+
 <div class="col-md-8 mb-4">
 <%= link_to '一覧を見る',public_customers_good_path, class: "btn btn-primary" %>
 </div>
@@ -61,6 +64,7 @@
 <div class="col-md-4">
 過去の投稿一覧</br>
 </div>
+
 <div class="col-md-8">
 <%= link_to '一覧を見る',public_posts_path, class: "btn btn-primary" %>
 </div>

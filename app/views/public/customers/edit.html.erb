@@ -1,5 +1,4 @@
 <div class="container">
-
 <%= form_with model: @customer, url:public_customer_path, method: :PATCH do |f| %>
 
 <div class="row">
@@ -8,44 +7,37 @@
 <div class="col-md-4">
 ニックネーム
 </div>
-<div class="col-md-8 mb-4"><%= f.text_field :nickname,placeholder: '表示される名前' %>
-</div>
+<div class="col-md-8 mb-4"><%= f.text_field :nickname,placeholder: '表示される名前' %></div>
 
 <div class="col-md-4">
 氏名
 </div>
-<div class="col-md-8 mb-4"><%= f.text_field :last_name,placeholder: '姓' %> <%= f.text_field :first_name,placeholder: '名' %>
-</div>
+<div class="col-md-8 mb-4"><%= f.text_field :last_name,placeholder: '姓' %> <%= f.text_field :first_name,placeholder: '名' %></div>
 
 <div class="col-md-4">
 フリガナ
 </div>
-<div class="col-md-8 mb-4"><%= f.text_field :last_name_kana,placeholder: 'セイ' %> <%= f.text_field :first_name_kana,placeholder: 'メイ' %>
-</div>
+<div class="col-md-8 mb-4"><%= f.text_field :last_name_kana,placeholder: 'セイ' %> <%= f.text_field :first_name_kana,placeholder: 'メイ' %></div>
 
 <div class="col-md-4">
 郵便番号(ハイフンなし)
 </div>
-<div class="col-md-8 mb-4"><%= f.text_field :postal_code %>
-</div>
+<div class="col-md-8 mb-4"><%= f.text_field :postal_code %></div>
 
 <div class="col-md-4">
 住所
 </div>
-<div class="col-md-8 mb-4"><%= f.text_field :address, class:"text-long" %>
-</div>
+<div class="col-md-8 mb-4"><%= f.text_field :address, class:"text-long" %></div>
 
 <div class="col-md-4">
 電話番号（ハイフンなし）
 </div>
-<div class="col-md-8 mb-4"><%= f.text_field :telephone_number %>
-</div>
+<div class="col-md-8 mb-4"><%= f.text_field :telephone_number %></div>
 
 <div class="col-md-4">
 メールアドレス
 </div>
-<div class="col-md-8 mb-4"><%= f.text_field :email, class:"text-long" %>
-</div>
+<div class="col-md-8 mb-4"><%= f.text_field :email, class:"text-long" %></div>
 
 <div class="col-md-4">
 <%= f.submit '編集内容を保存', class: "btn btn-success" %>

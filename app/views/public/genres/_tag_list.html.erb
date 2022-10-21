@@ -7,20 +7,18 @@
 <p><%= form.label :説明文 %><br>
 <%= form.text_area :body,placeholder: 'body', class: "postbody" %>
 </p>
+
 <div style="width: 1000px">
 <%= form.collection_check_boxes(:genre_ids, Genre.where(customer_id: nil), :id, :name) do |b| %>
-  <%= b.label { b.check_box + b.text } %>
+<%= b.label { b.check_box + b.text } %>
 <% end %>
 <br>
 <%= form.collection_check_boxes(:genre_ids, Genre.where(customer_id: current_customer.id), :id, :name) do |d| %>
-  <%= d.label { d.check_box + d.text } %>
+<%= d.label { d.check_box + d.text } %>
 <% end %>
 </div>
+
 <p><%= form.label :画像 %><br>
-
- <%= form.file_field :post_image, placeholder: "プロフィール画像", accept: "image/*" %>
- </p>
-
-
-
+<%= form.file_field :post_image, placeholder: "プロフィール画像", accept: "image/*" %>
+</p>
 <% end %>

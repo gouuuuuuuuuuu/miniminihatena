@@ -2,14 +2,16 @@
 <div class= "container">
 <% @customer.liked_posts.each do |postss| %>
 <div class= "row mt-3">
-  <div class= col-md-4>
-     <%= link_to public_post_path(postss.id) do %>
+<div class= col-md-4>
+  
+<%= link_to public_post_path(postss.id) do %>
 ・<%= postss.title %>
 <% end %>
 </div>
+
 <div class= col-md-8>
-   <%= link_to public_post_path(postss.id) do %>
-<%= postss.body %></br>
+<%= link_to public_post_path(postss.id) do %>
+<%= postss.body %><br>
 <% end %>
 </div>
 </div>
