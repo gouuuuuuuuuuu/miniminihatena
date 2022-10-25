@@ -1,86 +1,88 @@
 <h2>新規会員登録</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-<%= render "public/shared/error_messages", resource: resource %>
+ <%= render "public/shared/error_messages", resource: resource %>
 
 <div class="container">
-<div class="row">
+ <div class="row">
 
   <div class="col-4">
-  <p>名前
+   <p>名前
   </div>
   <div class="col-8">
    <%= f.text_field :last_name,placeholder: '姓' %> <%= f.text_field :first_name,placeholder: '名' %>
   </div>
-  </p>
-  </br>
+   </p>
+  <br>
 
   <div class="col-4">
-  <p>フリガナ
+   <p>フリガナ
   </div>
   <div class="col-8">
    <%= f.text_field :last_name_kana,placeholder: 'セイ' %>  <%= f.text_field :first_name_kana,placeholder: 'メイ' %>
   </div>
-  </p>
-  </br>
+   </p>
+  <br>
 
   <div class="col-4">
-  <p>ニックネーム（ミニミニハテナで表示される名前（１０文字以内））
+   <p>ニックネーム（ミニミニハテナで表示される名前（１０文字以内））
   </div>
   <div class="col-8">
    <%= f.text_field :nickname,placeholder: '' %>
   </div>
-  </p>
-  </br>
+   </p>
+  <br>
 
   <div class="col-4">
-  <p>メールアドレス
+   <p>メールアドレス
   </div>
    <div class="col-8">
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
-  </p>
-  </br>
+   </p>
+  <br>
 
 
-   <div class="col-4">
-  <p>パスワード(<em><%= @minimum_password_length %></em>文字以上)
+  <div class="col-4">
+   <p>パスワード(<em><%= @minimum_password_length %></em>文字以上)
   </div>
-   <div class="col-8">
+  <div class="col-8">
     <% if @minimum_password_length %>
     <% end %>
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
-  <p>
-  </br>
+   <p>
+  <br>
 
   <div class="col-4">
-  <p>パスワード(確認用)
+   <p>パスワード(確認用)
   </div>
   <div class="col-8">
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
-  <p>
-  </br>
+   <p>
+  <br>
 
   <div class="col-4">
   </div>
   <div class="col-8">
-     <%= f.submit "新規登録", class: "btn btn-success d-none" %>
-      <button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">新規登録</button>
+   <%= f.submit "新規登録", class: "btn btn-success d-none" %>
+   <button type="button" class="btn btn-primary mb-12" data-toggle="modal" data-target="#testModal">新規登録</button>
   </div>
+  
   <div class="col-4">
-  <h4>既に登録済みの方</h4>
+   <h4>既に登録済みの方</h4>
   </div>
   <div class="col-8">
   </div>
   <div class="col-4">
-    <%= link_to customer_session_path do %>
-     <small>こちら</small>
-     <% end %><small style='margin-top:5px'>からログインしてください</small>
+   <%= link_to customer_session_path do %>
+   <small>こちら</small>
+   <% end %><small style='margin-top:5px'>からログインしてください</small>
   </div>
   <div class="col-8">
   </div>
+  
  </div>
 </div>
 <% end %>

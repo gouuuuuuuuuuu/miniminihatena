@@ -1,7 +1,8 @@
  <%#= flash[:notice] %>
 <% if flash[:alert] %>
-<%= flash[:alert] %>
+  <%= flash[:alert] %>
 <% end %>
+
 <h2>みにみにハテナ<i class="fas fa-question-square"></i></h2>
 <div class="mx-auto">
   <div class="search_form">
@@ -27,13 +28,14 @@
    <% end %>
   </div>
   <div id="post_lists">
-   <%= render partial: 'posts', locals: {posts: @posts} %>
+    <%= render partial: 'posts', locals: {posts: @posts} %>
   </div>
  </div>
 </div>
+
 <div class="mx-auto">
-<div id="view_more">
- <%= link_to_next_page @posts, 'もっと見る', remote: true, class: 'more-link', id: 'more-link' %>
+ <div id="view_more">
+   <%= link_to_next_page @posts, 'もっと見る', remote: true, class: 'more-link', id: 'more-link' %>
  </div>
 </div>
 
@@ -75,12 +77,18 @@
 
 <div class="container">
  <div class="d-flex flex-wrap bd-highlight justify-content-center">
-<%= render partial: "data", collection: @news, as: "news" %>
+  <%= render partial: "data", collection: @news, as: "news" %>
  </div>
 </div>
 
-　　<span id="back">
-      <a href="#">
-        <%= image_tag 'arrow.png' %>
-      </a>
-    </span>
+<span id="back">
+<a href="#">
+  <%= image_tag 'arrow.png' %>
+</a>
+</span>
+    
+    <!--　<span id="back">-->
+    <!--  <a href="#">-->
+    <!--    <#%= image_tag 'arrow.png' %>-->
+    <!--  </a>-->
+    <!--</span>-->

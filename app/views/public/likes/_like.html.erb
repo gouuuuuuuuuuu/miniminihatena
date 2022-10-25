@@ -1,10 +1,11 @@
 <% if customer_signed_in? && current_customer.already_liked?(post) %>
-    <%= link_to public_post_like_path(post.id, current_customer.likes.find_by(post_id: post.id).id), method: :delete, class: "unlike-btn", remote: true do %>
-      <i class="fas fa-heart"></i>
-    <% end %>
+  <%= link_to public_post_like_path(post.id, current_customer.likes.find_by(post_id: post.id).id), method: :delete, class: "unlike-btn", remote: true do %>
+   <i class="fas fa-heart"></i>
+<% end %>
 <% else %>
   <%= link_to public_post_likes_path(post.id),method: :post, class: "like-btn", remote: true do %>
    <i class="far fa-heart"></i>
-   <% end %>
 <% end %>
+<% end %>
+
 <%= post.liked_customers.count %>
