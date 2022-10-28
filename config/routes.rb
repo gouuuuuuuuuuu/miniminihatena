@@ -22,7 +22,7 @@ devise_for :customers,skip: [:passwords], controllers: {
   }
 
 # scope module: :public do
-  namespace :public do
+  scope module: :public do
    get "customers/confirmtion" => "customers#confirmtion"
    get "customers/good" => "customers#good"
    get "homes/top" => "homes#top"
