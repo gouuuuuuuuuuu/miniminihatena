@@ -5,7 +5,6 @@ class Public::GenresController < ApplicationController
  end
 
  def create
-  # binding.pry
   @post = Post.new
   @genres = current_customer.genres.new(genre_params)
   @genres.save
