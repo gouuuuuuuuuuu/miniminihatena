@@ -1,0 +1,30 @@
+数字のみを入力できるフォーム(テキストボックス)を作成する
+
+inputのtypeはnumberかtelか
+numberだと数字以外の文字も入力できる上に、Javascriptでその値を取得できないという点
+値を取得できないということは、対応処理も行うことができないということ
+一方telも数字以外の文字も入力できるけど、Javascriptでその値を取得できるという点で異なる
+telの場合は、入力桁数を制限するmaxlengthを使用することが可能
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　↓
+javascript・Jquery側でわざわざ桁数制限の処理を行わずに済む
+
+telがいいことがわかる
+
+書いてみる
+
+<body>
+<input type="tel" name="sample" id="form-ticker-symbol" maxlength="4"/>
+</body>
+
+<script type="text/javascript">
+$('#form-ticker-symbol').on("keypress", function(event){return leaveOnlyNumber(event);});
+
+function leaveOnlyNumber(e){
+  // 数字以外の不要な文字を削除
+  var st = String.fromCharCode(e.which);
+  if ("0123456789".indexOf(st,0) < 0) { return false; }
+  return true;  
+}
+</script>
+
+
