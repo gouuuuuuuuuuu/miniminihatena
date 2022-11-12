@@ -1,0 +1,42 @@
+投稿系アプリで文字数制限をする方法
+
+各モデルに記載
+
+基本系
+validates :検証するカラム名, {検証内容1, 検証内容2}
+
+
+
+投稿内容がcontentカラムに格納される際に空の投稿は行えないように検証
+下記に前述の内容の処理を記載
+
+validates :content, {presence: true}
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+投稿内容が140文字以下である場合のみ投稿を行えるようにする。
+下記に前述の内容の処理を記載
+
+validates :content, {lengh: {maximum: 140}}
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+前述の二つのバリデーションの検証内容を一つにまとめて記載
+下記に前述の内容の処理を記載
+
+validates :content, {presence: true, lengh: {maximum: 140}}
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+データを登録できないようにする→presence
+
+validates :name, presence: true
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+数値のみを許可する→numericality、空を許可するallow_blank
+
+ validates :name, presence: true, length: { maximum: 50 }
+ 　validates :age, numericality: { only_integer: true }, allow_blank: true
+ 
+ numericalityは、デフォルトでは小数も許容してしまう。ageカラムでは整数のみ許可したいので、 only_integerを。
+また、numericalityは空を許可しないため、空を許可する場合はallow_blank: trueを追加。（空を許可せず、数値のみを許可する場合はnumericalityのみ、 presence: trueは無くても良い。）
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+同一データは一つのみ許可する→uniqueness
+
+ validates :name, presence: true, length: { maximum: 50 }
+ 　validates :age, numericality: { only_integer: true }, allow_blank: true
+ 　　validates :email, presence: true, uniqueness: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i}
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
