@@ -1,0 +1,61 @@
+簡単ログイン・ゲストログイン機能の実装方法
+
+書くもの
+1. ルーティング
+2. コントローラー
+3. モデル
+4. ビュー
+
+
+1. ルーティング
+routes.rbにゲストログイン用のアクションを設定
+deviseのsessionsコントローラーに新しくメソッドを追加
+
+Rails.application.routes.draw do
+  devise_for :users
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/sessions#new_guest'
+  end
+end
+
+2. コントローラー
+controllersの中にusers(好みで変える)フォルダを作成しsessions_controller.rbファイルを作成
+new_guestメソッドをコントローラーに作成
+guestメソッドはモデルに作成
+
+class Users::SessionsController < Devise::SessionsController
+  def new_guest
+    user = User.guest
+    sign_in user   # ユーザーをログインさせる
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
+end
+
+
+３. モデル
+find_or_create_by!でゲストユーザーが無ければ作成、あれば取り出し
+あとはゲストユーザーがない時に作成するユーザー情報を記述
+
+def self.guest
+  find_or_create_by!(email: 'aaa@aaa.com') do |user|
+    user.password = SecureRandom.urlsafe_base64
+    user.password_confirmation = user.password
+    user.nickname = 'サンプル'#なんでもよし
+    user.birthday = '2000-01-01'#なんでもよし
+  end
+end
+
+
+4. ビュー
+今回はヘッダーにゲストログイン用のボタンを作成
+
+<ul class='lists-right'>
+  <% if user_signed_in? %>
+    <li><%= link_to current_user.nickname, user_path(current_user.id), class: "user-nickname" %></li>
+    <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "logout" %></li>
+  <% else %>
+    <li><%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, method: :post, class: "login" %></li>
+    <li><%= link_to 'ログイン', new_user_session_path, class: "login" %></li>
+    <li><%= link_to '新規登録', new_user_registration_path, class: "sign-up" %></li>
+  <% end %>
+</ul>
