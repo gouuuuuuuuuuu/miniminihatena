@@ -1,1 +1,69 @@
-あ
+もっと見るボタンの実装
+
+kaminariの実装
+
+gemfile内に
+gem 'kaminari'
+
+bundle install　する
+
+例
+このようなindexのページがあるとする
+
+ <h2 class="heading">最新記事</h2>
+ =========================================
+ <% @articles.each do |article| %>
+  <div class = "article-box">
+    <div class = "image">
+      <%= link_to image_tag("#{article.image_url}",:class=>"image"), top_path(:id => article.id) %>
+    </div>
+    <h3 class="title"><%= link_to article.title , top_path(:id => article.id)%></h3>
+    <p class="desc"><%= link_to article.article.truncate(50) , top_path(:id => article.id)%></p>
+    <time class="date"><%= article.created_at.strftime("%Y-%m-%d") %></time>
+  </div>
+<% end %>
+=========================================
+
+_article_list.html.erbに点線部分を切り取っていれる　
+
+<% @articles.each do |article| %>
+  <div class = "article-box">
+    <div class = "image">
+      <%= link_to image_tag("#{article.image_url}",:class=>"image"), top_path(:id => article.id) %>
+    </div>
+    <h3 class="title"><%= link_to article.title , top_path(:id => article.id)%></h3>
+    <p class="desc"><%= link_to article.article.truncate(50) , top_path(:id => article.id)%></p>
+    <time class="date"><%= article.created_at.strftime("%Y-%m-%d") %></time>
+  </div>
+<% end %>
+
+中身がなくなってしまったindexページにrenderで_article_list.html.erbを呼び出します。
+kaminariをいれたことによってlink_to_next_pageというヘルパーメソッドを使用可能
+
+
+index
+
+ <h2 class="heading">最新記事</h2>
+ <div id="article_lists"><%= render 'article_list' %></div>
+ <div class="more"><%= link_to_next_page @articles, 'もっと見る', remote: true, id: 'view_more' %></div>
+ 
+ 
+ 
+ index.js.erbというjavascriptのファイル（Ajax）を作成し、escape_javascriptメソッドで文字列のエスケープ処理
+ 
+ index.js.erb
+ 
+ $('#article_lists').append("<%= escape_javascript(render 'article_list', object: @articles) %>");
+$("#view_more").replaceWith("<%= escape_javascript( 
+link_to_next_page(@articles, 'もっと見る', remote: true, id: 'view_more')) %>");
+
+article.rbに幾つ表示するか決める　6とする
+
+article.rb
+
+paginates_per 6
+
+
+最後にkaminariのpageメソッドを使用
+
+@articles = Article.where(status: :true).order(created_at: :desc).page(params[:page])
