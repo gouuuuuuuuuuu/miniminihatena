@@ -1,0 +1,115 @@
+①Likeモデルの作成
+②モデルの関連付け
+③コントローラ、ルーティングの作成
+④ハートマークにリンクを追加
+⑤CSSを使い表示を変える
+⑥いいねの数を表示する
+
+
+①Likeモデルの作成
+
+ターミナルにてモデルを作成
+$ rails g model like user_id:integer topic_id:integer
+
+その後、マイグレーションを実行し、モデルの作成は完了
+$ rails db:migrate
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_________________________
+
+②モデルの関連付け
+
+Userから見てLikeモデルはたくさん存在
+
+・Userから見てLikeは複数存在している
+・Likeから見てUserはひとつ存在する
+
+つまりUserモデルに「has_many :likes」、Likeモデルに「belongs_to :user」を書く
+※注意点
+has_manyは複数形なのでモデルを複数形の「:likes」に、belongs_toは単数形なのでモデルを単数形の「:user」と書く
+
+_____________________________________________________________
+
+③コントローラ、ルーティングの作成
+
+$ rails g controller likes
+
+config/routes.rb
+
+get  'favorites/index'
+post '/favorites', to: 'favorites#create'
+
+likes_controller.rb
+
+class LikesController < ApplicationController
+  def index
+    @like_topics = current_user.like_topics
+  end
+
+  def create
+    like = Like.new #Likeクラスのインスタンスを作成
+    like.user_id = current_user.id #current_userのidを変数に代入
+    like.topic_id = params[:topic_id]
+
+    if like.save #likeが保存できているかどうかで条件分岐
+      redirect_to topics_path, success: 'いいねしました'
+    else
+      redirect_to topics_path, danger: 'いいねに失敗しました'
+    end
+  end
+
+  def destroy
+    @like = Like.find_by(user_id: current_user.id, topic_id: params[:topic_id])
+    @like.destroy
+    redirect_to topics_path, success: 'いいねを取り消しました'
+  end
+end
+
+__________________________________________________
+
+④ハートマークを用意し、リンクを追加
+
+ハートマークを追加する
+今回はFontawesomeからハートマークのアイコンを持ってくる
+
+今回使用するハートマーク
+<i class="far fa-heart"></i>
+
+topics/index.html.erb
+
+<% if !topic.like_users.include?(current_user) %>
+  <%= link_to likes_path(topic_id: topic.id), method: :post do %>
+    <i class="far fa-heart like-btn" ></i>
+  <% end %>
+<% else %>
+  <%= link_to likes_path(topic_id: topic.id), method: :delete do %>
+    <i class="fas fa-heart unlike-btn"></i>
+  <% end %>
+<% end %>
+
+__________________________________________________
+
+⑤CSSによって表示を変える
+
+stylesheets/hogehoge.scss
+.like-btn {
+ width: 25px;
+ height: 30px;
+ font-size: 25px;
+ color: #808080; 
+ margin-left: 20px;
+ }
+
+.unlike-btn {
+ width: 25px;
+ height: 30px;
+ font-size: 25px;
+ color: #e54747;
+ margin-left: 20px;
+ }
+
+##⑥いいねの数をビューに表示する
+投稿一覧ページに表示する
+countメソッドを使いいいねの数をひっぱってきてる
+
+```/views/topics/index.html.erb
+<%= topic.like_users.count %>
