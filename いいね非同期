@@ -1,0 +1,220 @@
+【Rails6】いいね機能（同期→非同期）実装
+
+①モデルの記述（同期いいね）
+
+% rails g model like
+
+Likeモデルを作成し、マイグレーションファイルの記述
+今回は、ユーザーIDと投稿記事IDを保存するために、カラムは外部キーであるuse_idとarticle_idとする
+
+db/migrate/20201111111111_create_likes.rb
+
+class CreateLikes < ActiveRecord::Migration[6.0]
+  def change
+    create_table :likes do |t|
+      t.references :article, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
+      t.timestamps
+    end
+  end
+end
+
+app/models/like.rb
+class Like < ApplicationRecord
+  belongs_to :article
+  belongs_to :user
+end
+
+app/models/user.rb
+（中略）
+  has_many :article
+  has_many :likes, dependent: :destroy
+  
+app/models/article.rb
+(中略）
+  has_many :likes, dependent: :destroy
+  
+「dependent: :destroy」を記述することで、記事が削除された時orユーザーが削除された時に、紐づくいいねも削除されるようになる
+
+「liked_by?」メソッドをuserモデルに定義することで、ユーザーがいいねを押しているかどうかを判別する
+
+app/models/user.rb
+
+(中略)
+has_many :article
+has_many :likes, dependent: :destroy
+
+def liked_by?(article_id)
+  likes.where(article_id: article_id).exists?
+end
+
+whereメソッドを使用することで、likesテーブルに「article_id」が存在しているかどうか探す。またexists?メソッドは、該当の値があれば「true」、なければ「
+false」を返すメソッド。テーブルとのやりとりに関するメソッドについては、モデルに置く？？？＜＜＜＜＜＜＜（ここ少しわからない）＞＞＞＞＞＞＞＞＞＞
+
+_______________________________________________________________________________________________________________________________
+
+②コントローラーの記述（同期いいね）
+ターミナル
+% rails g controller likes
+
+コマンドを実行しlikesコントローラーを生成、作成したコントローラーにcreateアクション・destroyアクションを記述し、いいねの付与と解除を設定
+
+app/controllers/likes_controller.rb
+
+class LikesController < ApplicationController
+
+  def create
+    Like.create(user_id: current_user.id, article_id: params[:id])
+    redirect_to root_path
+  end
+
+  def destroy
+    Like.find_by(user_id: current_user.id, article_id: params[:id]).destroy
+    redirect_to root_path
+  end
+
+end
+
+destroyアクションに使用している、find_byメソッドは複数の検索条件を指定することができるメソッド
+
+
+
+③ルーティングの記述
+config/routes.rb
+
+post 'like/:id' => 'likes#create', as: 'create_like'
+delete 'like/:id' => 'likes#destroy', as: 'destroy_like'
+
+asオプションを使うことで、ルーティングに名前を設定できる
+
+____________________________________________________________
+
+④ビューファイルの記述
+複数箇所にいいね機能を実装したいと思っているため、部分テンプレートを使用し、likeのビューを記述している
+
+app/views/likes/_like.html.erb
+
+<div class="likes_buttons">
+<% if user_signed_in? %>
+  <% if current_user.liked_by?(@article.id) %>
+    <%= link_to destroy_like_path(@article.id, current_user.likes.find_by(article_id: @article.id).id), method: :delete do %>
+      <p class="like-button"><i class="fas fa-heart fa-2x" style="color: #e82a2a;"></i><span style="color: #e82a2a"><%= @article.likes.count %></span></p>
+    <% end %>
+  <% else %>
+    <%= link_to create_like_path(@article.id), method: :post do %>
+      <p class="like-button"><i class="far fa-heart fa-2x" style="color: #e82a2a;"></i><span style="color: #e82a2a"><%= @article.likes.count %></span></p>
+    <% end %>
+  <% end %>
+<% end %>
+</div>
+
+FontAwesomeを使用してハートの絵文字を表示、また、<%= @article.likes.count %>でいいね数の表示
+
+以上で同期いいねは完了、続いて非同期
+
+_______________________________________________________________________________________
+
+⑤ビューファイルの編集
+非同期実装するためには、先ほどの記述からlink_toメソッドに「remote: true」を付与。remote: trueを付与することで、パラメーターがHTML形式ではなくJS形式で送られるようになる？？。今回は付与することで、likes_controller.rbのcreateアクション後は、views/likes/create.js.erbが呼び出される。
+
+app/views/likes/_like.html.erb
+
+<div class="likes_buttons">
+<% if user_signed_in? %>
+  <% if current_user.liked_by?(@article.id) %>
+    <%= link_to destroy_like_path(@article.id, current_user.likes.find_by(article_id: @article.id).id), method: :delete, remote: true do %>
+      <p class="like-button"><i class="fas fa-heart fa-2x" style="color: #e82a2a;"></i><span style="color: #e82a2a"><%= @article.likes.count %></span></p>
+    <% end %>
+  <% else %>
+    <%= link_to create_like_path(@article.id), method: :post, remote: true do %>
+      <p class="like-button"><i class="far fa-heart fa-2x" style="color: #e82a2a;"></i><span style="color: #e82a2a"><%= @article.likes.count %></span></p>
+    <% end %>
+  <% end %>
+<% end %>
+</div>
+
+_____________________________________________________________________________________________________________________________
+
+⑥コントローラーの編集
+ここで、コントローラーに記述をしていた「redirect_to」の記述を削除、そのままにしていると、画面遷移が行われ、非同期処理ができなくなるため
+また、「before_action」を使用して、投稿のidを取得できるようにしている
+
+app/controllers/likes_controller.rb
+class LikesController < ApplicationController
+  before_action :article_params
+  def create
+    Like.create(user_id: current_user.id, article_id: params[:id])
+  end
+
+  def destroy
+    Like.find_by(user_id: current_user.id, article_id: params[:id]).destroy
+  end
+
+  def article_params
+    @article = Article.find(params[:id])
+  end
+end
+
+____________________________________________________________________________________________________
+
+⑦js.erbファイルの記述
+以下の2つのファイルを生成し、同様の記述
+
+app/views/likes/create.js.erb
+
+$('.likes_buttons').html("<%= j(render partial: 'likes/like', locals: {article: @article}) %>");
+
+app/views/likes/destroy.js.erb
+
+$('.likes_buttons').html("<%= j(render partial: 'likes/like', locals: {article: @article}) %>");
+
+likes_buttonsの部分のHTMLだけ、renderで部分的に更新する処理を記述
+あとは好きな部分で部分テンプレートを呼び出してもらえれば完成
+
+app/views/articles/show.html.erb
+
+<%= render partial: "likes/like", locals: { article:@article } %>
+
+____________________________________________________________________________________________________
+⑧Rails6におけるjQueryの環境設定
+Rails6からwebpackerというものが標準となり、jQueryの導入を記述
+前提としてyarnというものがmac内にすでにインストールされているものとする。
+
+ターミナル
+% yarn add bootstrap jquery popper.js
+
+まず、上記コマンドを作成中のアプリケーションディレクトリで実行
+
+次に、導入する記述
+
+app/javascript/packs/application.js
+require("@rails/ujs").start()
+require("turbolinks").start()
+require("@rails/activestorage").start()
+require("channels")
+...
+//この下を記入
+require("bootstrap");
+...
+bootstrapとjQueryは依存関係にあるため、「require("bootstrap")」の記述で同時に「require("jquery")」も記述したようになるみたいです。
+
+最後にwebpackerの記述をしていきます。
+
+config/webpack/environment.js
+const { environment } = require('@rails/webpacker')
+
+const webpack = require('webpack');
+
+environment.plugins.prepend(
+  'Provide',
+  new webpack.ProvidePlugin({
+    $: 'jquery/src/jquery',
+    jQuery: 'jquery/src/jquery',
+    Popper: ['popper.js', 'default']
+  })
+)
+
+module.exports = environment
+
+以上で、Rails上でbootstrap,jQueryを使用することができるようになる。なげーー大変や
+
