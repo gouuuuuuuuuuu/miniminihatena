@@ -1,0 +1,191 @@
+##ルーティング定義
+ルーティングから定義
+
+routes.rb
+
+get "search" => "searches#search"
+
+検索ボタンが押された時、Searchesコントローラーのsearchアクションが実行されるように定義
+
+パス名は__「search_path」__
+____________________________________________________________________________________________________
+##検索フォーム作成
+
+次に、検索フォームを設置
+今回はヘッダー内に検索フォームを表示したかった為、部分テンプレートとして作成
+
+_serach.html.erb
+
+<% if user_signed_in? %>
+  <div class="search_form">
+    <%= form_with url: search_path, local: true, method: :get do |f| %>
+      <%= f.text_field :word %>
+      <%= f.select :range, options_for_select([['User'], ['Book']]) %>
+      <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
+      <%= f.submit "検索", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+<% end %>
+
+①url: search_path
+検索内容を、先ほど作成したルーティングに送信
+
+
+②<%= f.text_field :word %>
+検索内容を、wordとしてアクションに送っている
+
+
+③<%= f.select :range, options_for_select([['User'], ['Book']]) %>
+今回は複数のモデルを検索できるように実装する為、
+__Userモデル__と__Bookモデル__を選択できるようにしている
+
+選択したモデルをrangeとしてアクションに送っている
+
+
+④ <%= f.select :search, options_for_select([["完全一致","perfect_match"]以下略]) %>
+検索手法を定義している
+今回のようにカンマ区切りで複数定義することができる
+
+選択した検索手法をsearchとしてアクションに送っている
+
+____________________________________________________________________________________________________
+
+##Searchesコントローラーにアクション定義
+
+コントローラーを作成
+
+ターミナル.
+rails g controller searches
+
+searchアクションを定義
+
+searches.controller.rb
+
+class SearchesController < ApplicationController
+  before_action :authenticate_user!
+
+  def search
+    @range = params[:range]
+
+    if @range == "User"
+      @users = User.looks(params[:search], params[:word])
+    else
+      @books = Book.looks(params[:search], params[:word])
+    end
+  end
+end
+
+①下記コードにて検索フォームからの情報を受け取っている
+　検索モデル→params[:range]
+　検索方法→params[:search]
+　検索ワード→params[:word]
+
+
+②if文を使い、検索モデルUserorBookで条件分岐させてる
+
+
+③looksメソッドを使い、検索内容を取得し、変数に代入
+検索方法params[:search]と、検索ワードparams[:word]を参照してデータを検索し
+1：インスタンス変数@usersにUserモデル内での検索結果を代入
+2：インスタンス変数@booksにBookモデル内での検索結果を代入
+___________________________________________________________________________
+
+##モデル内に検索方法の分岐定義
+
+このままでは検索方法による切替が行われない
+そこで、各モデルに条件分岐を追記する
+
+user.rb
+
+# 検索方法分岐
+  def self.looks(search, word)
+    if search == "perfect_match"
+      @user = User.where("name LIKE?", "#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?","%#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = User.all
+    end
+  end
+
+nameは検索対象であるusersテーブル内のカラム名
+適宜、適したカラム名を指定すること
+
+book.rb
+
+# 検索方法分岐
+  def self.looks(search, word)
+    if search == "perfect_match"
+      @book = Book.where("title LIKE?","#{word}")
+    elsif search == "forward_match"
+      @book = Book.where("title LIKE?","#{word}%")
+    elsif search == "backward_match"
+      @book = Book.where("title LIKE?","%#{word}")
+    elsif search == "partial_match"
+      @book = Book.where("title LIKE?","%#{word}%")
+    else
+      @book = Book.all
+    end
+  end
+  
+titleは検索対象であるbooksテーブル内のカラム名
+各々、適したカラム名を指定する事！
+
+各検索方法を下記のように指定
+検索フォーム作成時に記載した内容
+・完全一致→perfect_match
+・前方一致→forward_match
+・後方一致→backword_match
+・部分一致→partial_match
+
+送られてきたsearchによって条件分岐させること
+
+そして、whereメソッドを使いデータベースから該当データを取得し、変数に代入
+
+完全一致以外の検索方法は
+#{word}の前後(もしくは両方に)、__%__を追記することで定義することができる
+
+これにより、検索方法毎に適した検索が行われるようになったお
+
+____________________________________________________________________________________________________
+##検索結果の一覧表示
+
+ビューファイルを作成
+
+searchesコントローラ内で、検索結果を代入したインスタンス変数(@usersと@books)に対し、each文をつかって1つずつ取り出していくウェウェ
+
+search_result.html.erb
+
+<h2>Results index</h2>
+
+<table class="table table-hover table-inverse">
+  <!--検索対象モデルがUserの時 -->
+  <% if @range == "User" %>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <!--検索対象モデルがUserではない時(= 検索対象モデルがBookの時) -->
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= book.title %></td>
+          <td><%= book.body %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>
+
+とりあえずここで終わり
+大変やなー
+
+
