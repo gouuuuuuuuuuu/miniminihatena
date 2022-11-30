@@ -1,0 +1,96 @@
+カカート内商品の合計金額を出す inject 税込価格の表示
+
+マイグレーションファイル
+customer_id,item_idは外部キーで、個数はnull:falseとする
+
+class CreateCartItems < ActiveRecord::Migration[5.2]
+  def change
+    create_table :cart_items do |t|
+
+
+     t.integer :item_id
+      t.integer :customer_id
+      t.integer :quantity,null: false
+
+      t.timestamps
+    end
+  end
+end
+
+モデルファイル
+
+class CartItem < ApplicationRecord
+    belongs_to :item
+    belongs_to :customer
+
+    validates :item_id, :quantity, presence: true
+    validates :quantity, numericality:{ only_integer: true }
+
+  def sum_of_price
+    item.taxin_price * quantity
+  end  
+end
+
+
+
+カート内商品の合計金額を出すところで重要なのは、
+def sum_of_price
+item.taxin_price * quantity
+endである
+sum_of_priceで、ある商品の税込価格❌数量が出るように
+
+taxin_priceというのは、item.rbで定義
+
+item.rb
+def taxin_price
+        price*1.1
+    end
+    
+itemのテーブルには税抜価格であるpriceというカラムを作成しており、
+taxin_priceというカラムはないがが、ここで定義することにより、item.taxin_priceで税込価格が取り出せるようになった
+
+最難関！！！　コントローラー
+cart_items_controller.rb
+def index
+    @cart_items= current_customer.cart_items.all
+    # カートに入ってる商品の合計金額
+    @total = @cart_items.inject(0) { |sum, item| sum + item.sum_of_price }
+  end
+  
+カート内商品の一覧画面で、カート内商品の合計金額を算出
+
+
+
+コードの解読
+@total = @cart_items.inject(0) { |sum, item| sum + item.sum_of_price }
+
+inject(0)とは??
+配列の合計を算出するらしい。
+配列オブジェクト.inject {|初期値, 要素| ブロック処理 }が基本の形
+inject(0)の(0)は、初期値は0ですよ〜ということのようだ。
+
+{ |sum, item| sum + item.sum_of_price }で行ってることは？
+１回目の動作
+@cart_itemsから、カートに入ってる１つ目のitem取り出して、
+sumにitem.sum_of_priceを足す。（sumの初期値は inject(0)で０）
+
+2回目以降の動作
+次のitem取り出して、sumにitem.sum_of_priceを足す。
+
+これで、最終的にカート内商品の合計金額が出る！！！
+
+injectは”注入” sumにモデルで定義してるitem.sum_of_priceがどんどん注入されてくイメージ！？
+
+viewファイル
+
+cart_item.html.erb
+
+¥<%= @total.round.to_s(:delimited)%>
+
+これで合計金額出せました！！おおおおおおおおお
+
+
+
+
+
+
