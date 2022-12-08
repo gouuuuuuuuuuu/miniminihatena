@@ -1,0 +1,63 @@
+ destroy_allメソッドの使い方
+ 
+ destroy_allメソッドとは、すでにテーブルに存在するレコードを一括で削除するメソッド
+ 
+ destroy_allメソッドの基本構文
+ 
+モデルクラスorインスタンス.destroy_all
+
+以下のようにすると、usersテーブル内の全てのレコードが一括で削除される
+ターミナル | destroy_allメソッドの使用例
+
+User.destroy_all
+
+またwhereメソッドと併用すると条件に当てはまったレコードを一括で削除することができる
+
+ターミナル
+# idが1から10のレコードを一括で削除
+
+User.where(id: 1..10).destroy_all
+
+
+またはアソシエーションを使って関連するレコードを削除することもできる
+
+ターミナル
+# idが1のユーザーの投稿を一括で削除
+user = User.find(1)
+user.articles.destroy_all
+
+delete_allメソッドとの違い
+destroy_allメソッドはデータを削除するときにActiveRecord、
+つまりモデルを介すのに対し、delete_allメソッドはActiveRecordを介さずにSQLを直接実行してデータを削除する
+だから、モデルでdependentオプションを定義していてもdelete_allはモデルを介さないので、
+「dependentオプション」は実行されない
+
+全てのレコードを削除するボタンを作る
+実際のアプリではほとんど作成することはないかもやけど、練習としてdestroy_allメソッドを使って全てのレコードを削除するボタンを作る
+今回はdestroy_allアクションを追加してみる
+ルーティングを下記のように編集
+
+collectionを使いrailsの7つのアクション以外のアクションをルーティングに追加
+
+
+routes.rb
+resources :articles do
+  collection do
+    delete 'destroy_all'
+  end
+end
+次にarticlesコントローラーにdestroy_allアクションを定義
+
+articlesコントローラー
+def destroy_all
+  Article.destroy_all
+  redirect_to articles_path
+end
+
+次にビューファイルに全て削除するボタンを作成する
+今回はbutton_toメソッドを使いボタンを作成する
+
+articles/index.html.erb
+<%= button_to "全て削除", destroy_all_articles_path, method: :delete %>
+
+これで実装
