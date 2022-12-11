@@ -1,0 +1,45 @@
+ログインユーザーが、URLを入力しても特定のページに遷移できないようにする
+
+1.どういう時に起きるか
+
+buy_item_controller.rb
+  def edit
+    @buy_item = BuyItem.find(params[:id])
+  end
+  
+例えば
+マイページやマイアカウント、自分の投稿したページを編集する時に"edit"アクションをプログラミングするかと
+
+この時に上記のプログラムだけでは、URLに〜〜/〜〜/editと打ち込んでしまえば、ログアウトしているユーザーや、同じアプリケーションにログインしているユーザーでも異なるアカウントを操作できてしまう
+
+_________________________________________________________________________________________________________________________________________________
+2.どのように使うのか
+
+buy_item_controller.rb
+def edit
+    @buy_item = BuyItem.find(params[:id])
+   redirect_to root_path unless current_user.id == @buy_item.user_id
+end
+
+gem"devise"を使用しているので”current_user.id”が入って
+
+”redirect_to root_path”で”トップページに戻る”ようにしている
+
+”unless current_user.id == @buy_item.user_id”では、”もし現在ログインしているユーザーが該当の商品の出品者ユーザーではなかったら”とプログラム
+
+なので、出品者とログインしているユーザーが違う場合は商品を編集できない
+
+_______________________________________________________________________________________________________________________________________
+3.ここから学んだこと
+
+ログアウトしている場合も"edit"で設定しようと思ったが、ログアウトしている場合は範囲がすぎて全てのアクションに設定しないといけない、そのときにbefore_actionが使える？
+before_actionとexceptを使用して無限ループが起こらないアクション以外（index,show以外）はunlessでプログラミングしてしまえばいいと考えた
+
+buy_item_controller.rb
+ before_action :move_to_index, except: [:index, :show]
+
+  def move_to_index
+    redirect_to new_user_session_path unless user_signed_in?
+  end
+
+
