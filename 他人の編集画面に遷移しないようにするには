@@ -1,0 +1,57 @@
+他人の編集画面に遷移しないようにするには
+
+
+1.before_actionとauthenticate_user!を設定する
+
+2.correct userについてストロングパラメーターの下で定義する
+
+
+1.before_actionを設定する
+対象のコントローラーに入力する（今回はBooks controllerを例に）
+
+class BooksController < ApplicationController
+  before_action :correct_user, only: [:edit, :update]
+:
+:
+end
+・before_actionは各アクションが実行される前に呼ばれている
+・今回は後ろのonlyで呼び出す前にアクションをeditとupdateで限定している
+
+このあとcorrect_userを定義する
+
+___________________________________________________________________________
+
+2.correct userについてストロングパラメーターの下で定義する
+入力方法は以下の通り
+
+ def edit
+  :
+ end
+
+ def update
+  :
+ end
+
+  private
+
+  def book_params
+    params.require(:book).permit(:title, :body)
+  end
+
+  def correct_user
+    @book = Book.find(params[:id])
+    @user = @book.user
+    redirect_to(books_path) unless @user == current_user
+  end
+
+まず、
+　①@book = Book.find(params[:id])でidのついた本を１つ選ぶ
+　②@user = @book.userで①で選んだ本をもってるUserであると定義（Userモデルと関連付けてる）
+　③redirect_to(books_path) unless @user == current_user ②で定義したuserと現在ログインしているuserが一致していなければ、一覧ページにリダイレクトされる
+
+上記の１、２を両方設定すると他人の編集画面にURL直打ちでは遷移できなくなルおおおおおおおおお！！！！！！！
+
+
+
+
+
