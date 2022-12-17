@@ -1,2 +1,84 @@
 f.collection_selectとは
 
+1 説明
+
+選択ボックスをモデルの情報を元に生成
+________________________________________
+
+2 使い方
+
+collection_select(オブジェクト名, メソッド名, 要素の配列, value属性の項目, テキストの項目 [, オプション or HTML属性 or イベント属性])
+f.object
+
+f.collection_select(メソッド名, オブジェクトの配列, value属性の項目, テキストの項目 [, オプション or HTML属性 or イベント属性])
+
+モデルから引っ張ってきた選択肢から選んでDBに送ろうよということ
+______________________________________________________________________________________________________________________
+
+
+3 具体例
+
+ruby.rb
+f.collection_select(:name, @categories, :id, :name)
+
+↓上記の結果
+
+<select id="page_name" name="page[name]"><option value="1">Railsの基礎知識</option>
+<option value="2">Rubyの基礎知識</option>
+</select>
+
+第一引数
+メソッド名　:name
+この情報をもとに、selectタグのid属性、name属性を決める
+↓の〇〇部分が決まる
+
+<select name="○○" id="◯◯">
+第二引数
+オブジェクトの配列 @categories
+その選択肢はどの配列がもとになるの？ということ
+前提としては
+
+@categories = Post.all
+
+のように定義されているモデルから配列を取り出してある状態
+
+第三引数
+:id value属性の項目
+ここにvalueが入る、つまり選択された場合ここの値がDBに送られ,今回は:idなのでidが送られる
+↓の◯◯に入る
+
+<option value="◯◯">選択肢</option>
+
+第四引数
+:name
+選択肢に実際に表示するのはこれということを指定している。項目は、optionタグ内のテキストに設定したい値のカラム名が入る。nameカラムを選択肢として表示したいので:nameと設定する
+↓の選択肢に:nameが入る
+
+<option value="1">選択肢</option>
+
+第五引数
+これはオプションですが
+prompt: "選択してください"
+で初期設定でこれが表示されるようになります（オススメ!!!!
+）
+
+補足
+選択肢を別のモデルから引っ張ってきたい場合
+
+ruby.rb
+f.collection_select(:name, @categories, :id, :name)
+ここの@categoriesを　モデル名.all　とかにしてあげるとそこから選択肢を引っ張ってこれる
+モデル名はクラスメソッドなのでどこからでも呼び出せる
+
+具体例 2
+
+ruby.rb
+f.collection_select :name, MenuSelect.all, :menu_name, :menu_name, prompt: "何をしましたか？", class: 'form-control'
+
+クラスが付けられない
+※クラス名の付け方
+
+= f.collection_select :postage_player_id, PostagePlayer.all, :id, :name,{prompt: "選択してください"}, {class: "new-wrapper__main__input-select"}
+,{prompt: "選択してください"}, {class: "new-wrapper_main_input-select"}こんな感じでpromptとclassを引数として渡してあげるとクラスが設定できる
+
+
