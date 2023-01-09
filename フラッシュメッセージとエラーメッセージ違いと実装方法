@@ -1,0 +1,163 @@
+フラッシュメッセージとエラーメッセージ違いと実装方法
+
+
+フラッシュメッセージ
+Webサービス側の処理が行われた際に、その処理の結果をユーザーにわかるようにメッセージとして表示させるものです。
+
+投稿の保存、編集、削除など行われたかどうか、不安になるので、メッセージとして表示させます。
+
+______________________________________________________________________________________________________
+エラーメッセージ
+バリデーションによるエラーをメッセージとして表示させるものです。
+
+通常、投稿の保存、編集がバリデーションに引っかかったときは、エラーも出ず、保存もされない状態でrenderされます。
+ユーザーは、なぜ保存されていないのかがわからないので、エラーメッセージを表示することで、どこが間違っているかをわかるようにします。
+____________________________________________________________________________________________________
+
+
+フラッシュメッセージの実装
+フラッシュメッセージは基本的には、コントローラーの処理が完了したときに表示するものなので、コントローラーでどんなメッセージを表示するかを記述していきます。
+
+実装方法は超かんたんなので、さくっとやっていきましょう！
+
+コントローラー
+投稿の処理を例にしていきます。
+投稿が保存されたときに「投稿に成功しました」
+投稿を削除したときに「投稿を削除しました」
+
+まずは保存されたとき
+
+controllers/posts_controller.rb
+def create
+  @post = Post.new(post_params)
+  @post.user_id = current_user.id
+  if @post.save
+    # リダイレクトと同時に'投稿に成功しました'を表示
+    redirect_to posts_path, notice: '投稿に成功しました'
+  else
+    render :new
+  end
+end
+次に削除されたとき
+
+controllers/posts_controller.rb
+def destroy
+  @post = Post.find(params[:id])
+  @post.destroy
+  # リダイレクトと同時に'投稿を削除しました'を表示
+  redirect_to posts_path, alert: '投稿を削除しました'
+end
+このように
+リダイレクト先 notice: 表示するメッセージ
+リダイレクト先 alert: 表示するメッセージ
+でフラッシュメッセージを表示できます。
+
+ただこれは、省略した形で
+
+省略前
+if @post.save
+  flash[:notice] = '投稿を削除しました'
+  redirect_to posts_path
+と同じです。
+
+ビュー
+コントローラーで記述した
+notice: 表示するメッセージ
+alert: 表示するメッセージ
+は、省略してない形でわかるように、noticeやalertに表示したいメッセージを代入しています。
+
+それが処理が完了したときにビューに値として渡されるので、それを受け取って表示します。
+
+views/layouts/application.html.erbは、できるだけすっきりさせたいので、今回は部分テンプレートを使用。
+
+views/layouts/application.html.erb
+:
+<main>
+  <%= render 'layouts/flash' %>
+  <%= yield %>
+</main>
+:
+mainタグ内の<%= yield %>の上にフラッシュメッセージを記述。
+
+views/layouts/_flash.html.erb
+<% if flash[:notice] %>
+  <p class="alert alert-success"><%= notice %></p>
+<% elsif flash[:alert] %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+ここで、Bootstrapを使ってnoticeとalertで表示する色を変えています。
+こうすることで、ユーザーにとってもわかりやすくなります。
+
+これだけで、フラッシュメッセージの実装ができました。
+
+エラーメッセージの実装
+次にエラーメッセージの実装をしていきます。
+
+バリデーションによるエラーを表示するものなので、バリデーションの実装がまだの方はこちらを参考にしてください。
+[Rails]よく使うバリデーションまとめ
+
+コントローラー
+投稿の処理を例にしていきます。
+投稿のモデルで空白で保存できないようにバリデーションをかけていた場合、正常に保存できるパターンと空白でデータを入力してしまい、保存できないパターンがあるので、if文を使って条件分岐していきます。
+
+controllers/posts_controller.rb
+:
+def create
+  @post = Post.new(post_params)
+  @post.user_id = current_user.id
+  if @post.save
+    # 正常に保存ができたときの処理
+    redirect_to posts_path, notice: '投稿に成功しました'
+  else
+    # バリデーションに引っかかったときの処理
+    render :new
+  end
+end
+:
+ビュー
+エラーメッセージは、いろんなモデルで共通のものを使用するので、部分テンプレートにして使っていきます。
+いろんなモデルで使いたいので、変数名はモデルにしておいてください。
+
+views/layouts/_error_messages.html.erb
+<% if model.errors.any? %>
+  <div class="alert alert-danger">
+    <ul class="list-unstyled">
+      <h5><%= model.errors.count %>件のエラー</h5>
+      <% model.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+ここで、１つの疑問がでてきます。
+「部分テンプレートにしたら、いろんなモデルの変数を渡すのに楽な方法ないの？」
+と思ったはずです。
+
+楽な方法あります！
+
+ズバリf.objectです！
+それなに？って感じですよね。
+こんな特徴もってます
+
+特徴
+form_withやform_forなどのオプション
+form内で使うことで、モデルオブジェクトを呼び出す事ができる
+同じコードを流用するときに、変数を変える必要が無くなる
+まあ「エラーメッセージとかのときは、便利なんだね」ぐらいに思ってもらえたらいいですw
+
+1つ注意点としては、formのオプションなので、フォーム内に部分テンプレートを記述してください。
+
+views/posts/new.html.erb
+<h1>画像投稿フォーム</h1>
+<%= form_with model: @post, local:true do |f| %>
+  <!--エラーメッセージはform内に記述-->
+  <!--変数modelにf.objectを渡す-->
+  <%= render 'layouts/error_messages', model: f.object %>
+  <h4>画像</h4>
+  <%= f.attachment_field :image %>
+  <h4>内容</h4>
+  <%= f.text_field :content %>
+  <%= f.submit '投稿' %>
+<% end %>
+これで、エラーメッセージが実装できました。
+
