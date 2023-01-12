@@ -60,4 +60,4 @@ end
 articles/index.html.erb
 <%= button_to "全て削除", destroy_all_articles_path, method: :delete %>
 
-これで実装
+これで実装完了！！！
