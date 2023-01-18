@@ -152,4 +152,4 @@ mysql> select * from active_storage_attachments;
 1 row in set (0.00 sec)
 まとめ
 ここまでRails6新機能ActionTextを試してきましたが、リッチテキストが本当に簡単に実装できることが分かりました。ただ、業務上で使うには画像のリサイズはどのようにするのか等の懸念点が多いのでもう少し詰めて行き見極めていきたいと思います。
-
+！！！
